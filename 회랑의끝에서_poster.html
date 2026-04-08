@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회랑의 끝에서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #050810;
+    font-family: 'Noto Serif KR', serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .card {
+    width: 1080px;
+    min-height: 1350px;
+    background: #0b0e14;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 90px 108px;
+  }
+
+  /* 배경 그라데이션 */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 160% 70% at 50% -5%, rgba(74,111,168,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 95% 105%, rgba(201,123,142,0.09) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* 상단 투톤 바 */
+  .sky-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #c97b8e 0%, #c97b8e 50%, #4a6fa8 50%, #4a6fa8 100%);
+    opacity: 0.65;
+  }
+
+  /* 시리즈 레이블 */
+  .series-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: #7ba7e0;
+    opacity: 0.7;
+    margin-bottom: 14px;
+    position: relative; z-index: 1;
+  }
+
+  /* 표지 전용 */
+  .cover-line {
+    width: 72px; height: 3px;
+    background: linear-gradient(90deg, #c97b8e, #4a6fa8);
+    margin-bottom: 26px;
+    border-radius: 2px;
+  }
+  .cover-title {
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 1.1;
+    color: #e8e0d4;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .cover-subtitle {
+    font-size: 15px;
+    color: #c97b8e;
+    letter-spacing: 0.22em;
+    opacity: 0.85;
+    margin-bottom: 44px;
+  }
+  .cover-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #4a6fa8 30%, #c97b8e 70%, transparent);
+    opacity: 0.45;
+    margin-bottom: 36px;
+  }
+  .cover-quote {
+    font-size: 16.5px;
+    line-height: 2;
+    color: #a09488;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    max-width: 500px;
+  }
+  .cover-bg-char {
+    position: absolute;
+    top: 42%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 360px;
+    color: rgba(74,111,168,0.05);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* 챕터 태그 */
+  .ch-tag {
+    display: inline-block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: #b8976e;
+    border: 1px solid rgba(184,151,110,0.3);
+    padding: 5px 14px;
+    margin-bottom: 36px;
+    opacity: 0.9;
+    position: relative; z-index: 1;
+  }
+
+  /* 본문 */
+  .prose {
+    font-size: 19.5px;
+    line-height: 2.1;
+    color: #e8e0d4;
+    font-weight: 300;
+    letter-spacing: 0.005em;
+    position: relative; z-index: 1;
+    flex: 1;
+  }
+
+  .prose p { margin-bottom: 1.35em; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* 섹션 구분선 (원문의 공백 단락 역할) */
+  .sec-break {
+    width: 48px; height: 1px;
+    background: #b8976e;
+    opacity: 0.45;
+    margin: 2em 0;
+  }
+
+  /* 하단 */
+  .card-foot {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; z-index: 1;
+  }
+  .pg-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #a09488;
+    opacity: 0.4;
+    letter-spacing: 0.2em;
+  }
+  .wave {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: #b8976e;
+    opacity: 0.5;
+  }
+
+  /* 안내 */
+  .guide {
+    color: #333;
+    font-size: 13px;
+    text-align: center;
+    font-family: sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<p class="guide">각 카드를 스크린샷 · 브라우저 줌 100% 권장</p>
+
+<!-- ══════════════ 표지 ══════════════ -->
+<div class="card" style="justify-content: flex-end;">
+  <div class="sky-bar"></div>
+  <div class="cover-bg-char">∞</div>
+
+  <div style="position:relative; z-index:1;">
+    <div class="series-label">차원 이야기 · Episode 01</div>
+    <div class="cover-line"></div>
+    <div class="cover-title">회랑의 끝에서</div>
+    <div class="cover-subtitle">단편소설</div>
+    <div class="cover-rule"></div>
+    <div class="cover-quote">
+      두 세계가 겹쳤을 때, 하늘은<br>
+      칼로 벤 것처럼 반으로 갈라졌다.<br>
+      한쪽은 연분홍. 한쪽은 남색.
+    </div>
+  </div>
+
+  <div class="card-foot">
+    <div class="pg-num">Cover</div>
+    <div class="wave">∿</div>
+  </div>
+</div>
+
+<!-- ══════════════ 1 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">I</div>
+
+  <div class="prose">
+    <p>하늘의 색이 달라진 건 어제부터였다.</p>
+    <p>항구 도시 베르탄의 사람들은 아침에 일어나 하늘을 올려다보고 멈추었다. 원래 연분홍빛이던 하늘이 왼쪽 절반만 짙은 남색으로 바뀌어 있었다. 경계면은 칼로 벤 것처럼 선명했다. 아침 해가 두 하늘의 경계에 걸려서 빛이 반으로 갈라졌다. 한쪽은 주황색, 한쪽은 자주색.</p>
+    <p>"예쁘네."</p>
+    <p>소란이라고 부르기엔 너무 느린 불안이 항구를 덮었다. 어부들은 배를 끌어올리고, 상인들은 좌판을 닫지도 열지도 못한 채 하늘만 올려다봤다. 누군가가 신위존재들의 싸움이 여기까지 밀려온 거라고 했고, 다른 누군가가 헛소리라고 했다. 신위존재들의 싸움이 뭔데. 우리가 그런 걸 알 수 있나.</p>
+    <p>루는 부두에 앉아 다리를 흔들며 갈라진 하늘을 바라봤다. 열여섯이었다. 어부의 딸이었다. 아버지 소금에 절은 어선의 밑바닥을 솔질하러 가야 했는데, 하늘이 너무 이상해서 그냥 앉아있었다.</p>
+    <p>"루, 멍때리지 말고 와서 밧줄 정리해."</p>
+    <p>아버지의 목소리가 부두 건너편에서 날아왔다. 루는 일어섰다. 하늘이 갈라지든 말든 밧줄은 엉켜있을 거고, 내일도 물고기를 잡으러 나가야 하니까.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">01</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 2 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">II</div>
+
+  <div class="prose">
+    <p>경계면이 움직이기 시작한 건 사흘째 되는 날이었다.</p>
+    <p>남색 하늘이 밀려오고 있었다. 천천히. 하루에 손가락 네 개 폭만큼. 아이들이 경계면의 위치를 해안가 건물 모서리에 숯으로 표시해놨고, 루도 거기 끼어서 매일 아침 새 금을 긋고 있었다.</p>
+    <p>"이틀 전에 여기였고, 어제 여기고, 오늘 여기."</p>
+    <p>옆에서 같이 들여다보던 마르코가 말했다. 루보다 한 살 많은 대장간 견습이었다. 일하다 망치로 엄지를 찍어서 손톱이 까맣게 죽어있었다.</p>
+    <p>"이 속도면 열흘 뒤에 항구 위로 완전히 덮이겠는데."</p>
+    <p>"그러면 어떻게 돼?"</p>
+    <p>"몰라. 아무도 모르지."</p>
+    <p>루는 숯으로 새 금을 그었다. 밑에서부터 네 번째 금이었다.</p>
+    <p>"근데 저쪽 하늘은 뭔데? 원래 다른 차원 하늘이라는 거잖아."</p>
+    <p>마르코가 까만 손톱을 긁적이며 말했다. "아버지 말로는 옛날에도 이런 적 있었대. 차원이 겹치는 거래. 대부분은 그냥 스쳐 지나가고."</p>
+    <p>"대부분?"</p>
+    <p>"대부분."</p>
+    <p>루는 그 '대부분이 아닌 경우'에 대해 물어보지 않았다. 물어봤자 마르코도 모를 거니까.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">02</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 3 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">III</div>
+
+  <div class="prose">
+    <p>열흘째 되는 날, 하늘은 완전히 남색으로 덮였다.</p>
+    <p>그런데 하늘만 바뀐 게 아니었다.</p>
+    <p>항구 동쪽 끝, 원래 절벽이 있던 자리에 — 건물이 있었다. 하룻밤 사이에 나타난 것이었다. 돌로 된 건물이 아니었다. 유리처럼 매끈한 재질의, 각진 구조물이 절벽 위에 서 있었다. 베르탄 사람들은 평생 그런 건물을 본 적이 없었다.</p>
+    <p>항구가 들끓었다.</p>
+    <p>시장이 민병대를 소집했다. 사십 명의 남녀가 창과 도끼를 들고 절벽 방향으로 이동했다. 루는 가지 말라는 아버지의 말을 무시하고 — 정확히는, 아버지가 선창에서 뱃바닥에 물이 차는 것을 처리하느라 정신이 없는 틈을 타서 — 민병대 뒤를 따라갔다. 마르코도 있었다. 대장간 사부의 낡은 단검을 허리에 차고.</p>
+    <p>"무기라도 들고 다녀야지." 마르코가 말했다.</p>
+    <p>"난 칼질은 생선에만 해봤어."</p>
+    <p>"비슷하지 않을까."</p>
+    <p>"아니."</p>
+    <p>절벽에 가까이 갔을 때, 건물에서 사람들이 나오고 있었다.</p>
+    <p>루는 멈추었다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">03</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 4 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">IV</div>
+
+  <div class="prose">
+    <p>사람들이었다. 분명히 사람이었다. 팔 두 개, 다리 두 개, 얼굴이 있었다. 그런데 피부가 — 희미하게 파란빛을 띠고 있었다. 그것이 그들의 자연스러운 피부색인 것처럼. 그들도 베르탄 민병대를 보고 멈추었다.</p>
+    <p>양쪽 다 아무 말이 없었다. 서로를 바라보기만 했다.</p>
+    <p>아주 긴 시간이 그렇게 흘렀다. 어쩌면 몇 분이었을 것이다.</p>
+    <p>파란 피부의 사람 중 한 명이 한 발짝 앞으로 나왔다. 빈손을 보여주며. 아무 말도 하지 않았다. 아마 같은 언어가 아닐 것이다.</p>
+    <p>시장이 민병대의 창을 내리라고 말했다. 누군가가 반대했다. 시장이 고집했다.</p>
+    <p>빈손을 보여준 파란 피부의 사람은 — 나중에 루는 그의 이름이 '코르'라는 발음에 가장 가깝다는 것을 알게 됐다 — 품에서 무언가를 꺼냈다. 작은 구체였다. 구체가 빛나면서 — 허공에 이미지가 떠올랐다. 하늘의 도해. 두 색이 섞이는 그림. 그리고 두 무리의 사람을 나타내는 점들.</p>
+    <p>점들 사이에 선이 그어졌다.</p>
+    <p>코르가 루 쪽을 — 정확히는 민병대 쪽을 — 바라보며, 자기 가슴을 가리키고, 그 다음에 베르탄 쪽을 가리켰다.</p>
+    <p><em>우리도 당신들처럼 여기 있다. 우리도 모른다. 무슨 일이 일어나고 있는지.</em></p>
+    <p>말이 통하지 않았지만, 그 몸짓은 통했다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">04</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 5 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">V</div>
+
+  <div class="prose">
+    <p>두 달이 지났다.</p>
+    <p>베르탄과 파란 사람들의 도시 — 그들의 이름으로 '네이아'라고 불렸다 — 는 절벽을 경계로 붙어 있었다. 차원이 중첩된 것이다. 네이아 쪽에서는 절벽 아래로 어항 같은 항구가 갑자기 나타난 것이고, 베르탄 쪽에서는 절벽 위에 유리 건물이 솟아난 것이었다.</p>
+    <p>언어를 배우기 시작한 첫 번째 사람은 루였다.</p>
+    <p>이유가 있었던 건 아니다. 코르가 빈손을 보여준 그 순간부터, 그 발광하는 구체로 하늘의 도해를 보여준 그 순간부터 — 루는 저쪽 사람들에게 궁금한 게 너무 많았다. 생선을 절여서 가져다주고, 코르의 제자 중 하나인 엘라라는 여자가 네이아의 납작한 빵을 가져다주고, 둘은 돌 위에 앉아서 사물을 가리키며 서로의 언어를 말했다.</p>
+    <p>"바다." 루가 가리켰다.</p>
+    <p>"테린." 엘라가 말했다.</p>
+    <p>"바다."</p>
+    <p>"바-다."</p>
+    <p>"테린."</p>
+    <p>"…테린."</p>
+    <p>엘라가 웃었다. 파란 피부 위에 미소가 피지는 것은 루의 세계에서 보던 미소와 똑같았다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">05</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 6 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">VI</div>
+
+  <div class="prose">
+    <p>마르코는 네이아의 금속 기술에 반해버렸다. 유리처럼 보이던 건물의 재질은 유리가 아니었다. 어떤 합금이었다. 네이아의 대장장이는 마르코가 가져온 베르탄의 강철 도끼를 들어보더니 무슨 말인가를 했다. 코르가 통역했다.</p>
+    <p>"무겁고 강한 쇠네. 우리 쪽에는 이런 게 없어. 우리 것은 가볍고 유연하지만, 이렇게 단단하진 못해."</p>
+    <p>"바꿔 볼 수 있을까?" 마르코의 눈이 빛났다.</p>
+    <p>코르가 웃었다. "다음에 가져와."</p>
+
+    <div class="sec-break"></div>
+
+    <p>다섯 달째.</p>
+    <p>루는 네이아 말을 제법 했다. 엘라는 베르탄 말을 제법 했다. 둘은 서로의 언어를 반씩 섞어 대화를 이어갔고, 가끔은 둘 다 모르는 단어가 나오면 몸짓으로 때웠다. 어느 날 엘라가 물었다.</p>
+    <p>"너희는 하늘이 원래 무슨 색이야?"</p>
+    <p>"연분홍. 아침에는 거의 하얗고, 저녁에는 깊은 분홍."</p>
+    <p>"예쁘겠다."</p>
+    <p>"너희 남색 하늘도 예뻐."</p>
+    <p>엘라가 웃었다. "우리한테는 그냥 하늘이야. 예쁜지 모르겠어."</p>
+    <p>루도 그랬다. 연분홍 하늘이 예쁜지 모르고 살았다. 남색 하늘을 보고 나서야 — 자기 하늘이 어떤 색이었는지 알았다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">06</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 7 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">VII</div>
+
+  <div class="prose">
+    <p>"차원이 다시 갈라지면," 루가 말했다. "너희는 다시 사라지는 거야?"</p>
+    <p>엘라는 대답하지 않았다. 한참을 바다를 보고 있다가 말했다.</p>
+    <p>"모르지. 이전에도 이런 적이 있었다고 들었어. 겹쳤다가 다시 떨어지는 거. 그때 만났던 사람들이 있었는데, 다시 떨어지면서 — 그냥 사라졌다고. 서로한테. 같은 공간에 있었는데 갑자기 없는 거지."</p>
+    <p>바람이 불었다. 소금 냄새가 났다. 네이아 쪽에서는 소금 냄새가 나지 않았다. 엘라가 이 냄새를 처음 맡았을 때 눈을 크게 뜬 것을 루는 기억했다.</p>
+    <p>"얼마나 남았는지도 모르는 거야?"</p>
+    <p>"응."</p>
+    <p>"그러면 오늘 뭐 하고 싶어?"</p>
+    <p>엘라가 고개를 돌려 루를 봤다.</p>
+    <p>"바다 가르쳐줘. 수영."</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">07</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 8 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">VIII</div>
+
+  <div class="prose">
+    <p>여덟 달째, 경계면이 다시 나타났다.</p>
+    <p>이번에는 하늘에서가 아니라 땅에서. 절벽 아래 해안선 근처에 — 투명한 벽 같은 것이 아지랑이처럼 일렁이고 있었다. 네이아 쪽 학자들이 와서 관측했다. 코르도 왔다. 그의 얼굴은 어두웠다.</p>
+    <p>"경계가 다시 형성되고 있어."</p>
+    <p>시장의 집에서 양쪽이 모였다. 시장은 늙었다. 반년 사이에 더 늙은 것 같았다. 네이아의 지도자 — '연장자'라고 불리는 여성 — 도 같은 얼굴이었다.</p>
+    <p>"얼마나 남았습니까." 시장이 물었다.</p>
+    <p>코르가 통역하고, 연장자가 대답했다.</p>
+    <p>"빠르면 한 달. 느리면 석 달. 확실한 건 — 떨어진다는 것."</p>
+    <p>방 안이 조용했다.</p>
+    <p>마르코가 먼저 말했다. 아무도 예상하지 못한 말을.</p>
+    <p>"기록하죠. 지금까지 서로 배운 것 전부."</p>
+    <p>모두가 그를 봤다.</p>
+    <p>"떨어져도 — 배운 건 남잖아요. 우리가 네이아 합금 기술을 알게 됐고, 네이아는 우리 제련법을 알게 됐고. 그런 것들을 다 기록하면… 최소한 헛되지는 않잖아요."</p>
+    <p>코르가 통역했다. 연장자가 고개를 끄덕였다. 시장도 고개를 끄덕였다.</p>
+    <p>그날 밤부터 양쪽 사람들이 모여 기록을 시작했다. 기술, 언어, 의술, 농법, 항해술. 서로의 문자로 서로의 지식을 옮겼다. 루와 엘라는 번역을 했다. 밤새 촛불 아래서. 어부의 딸이 두 세계의 다리가 됐다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">08</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 9 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">IX</div>
+
+  <div class="prose">
+    <p>열한 달째, 아지랑이가 짙어졌다.</p>
+    <p>경계를 넘기가 힘들어지고 있었다. 넘으면 두통이 왔다. 코피가 났다. 아이들은 더 이상 경계를 넘지 못하게 됐다. 어른들도 하루에 한두 번이 한계였다.</p>
+    <p>루는 그래도 매일 넘었다.</p>
+    <p>마지막 날 아침, 엘라가 경계 저편에 서 있었다. 아지랑이 너머로 얼굴이 일그러져 보였다. 물속에 잠긴 것처럼.</p>
+    <p>루가 손을 뻗었다.</p>
+    <p>경계에 닿는 순간 온몸이 저렸다. 밀어내는 힘이 있었다. 그것이 차원이 분리되는 힘이었다. 인과율이 두 세계를 원래 자리로 되돌리는 것이었다.</p>
+    <p>엘라도 손을 뻗고 있었다.</p>
+    <p>손끝이 닿을 것 같았다. 거의 닿았다. 아지랑이가 두꺼워졌다. 엘라의 얼굴이 흐려졌다. 목소리가 들렸다 — 물속에서 들리는 것처럼 뭉개진 채로.</p>
+    <p>"루——"</p>
+    <p>아지랑이가 사라졌다.</p>
+    <p>절벽 위에 유리 건물이 없었다.</p>
+    <p>남색 하늘이 없었다.</p>
+    <p>연분홍 하늘이 돌아와 있었다. 아침의 거의 하얀, 저녁의 깊은 분홍.</p>
+    <p>루는 빈 절벽을 올려다봤다.</p>
+    <p>바람이 불었다. 소금 냄새가 났다.</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">09</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 10 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">X</div>
+
+  <div class="prose">
+    <p>그날 저녁, 루는 부두에 앉아 있었다. 다리를 흔들며.</p>
+    <p>마르코가 와서 옆에 앉았다. 한참을 아무 말 없이 바다를 봤다. 마르코의 허리에는 네이아 합금으로 만든 도구가 걸려 있었다. 그것만 남아있었다. 기록도 남아있었다. 양쪽이 작성한 교환 기록 스물세 권.</p>
+    <p>"루야."</p>
+    <p>"응."</p>
+    <p>"울어."</p>
+    <p>"안 울어."</p>
+    <p>"울어도 돼."</p>
+    <p>루는 울지 않았다. 대신 품에서 접힌 종이를 꺼냈다. 엘라가 네이아 문자로 쓴 편지였다. 마지막으로 경계를 넘었을 때 받은 것. 아직 다 번역하지 못했다.</p>
+    <p>"이거 다 번역하면, 기록에 넣어줘."</p>
+    <p>마르코가 고개를 끄덕였다.</p>
+    <p>루는 바다를 봤다. 연분홍 하늘 아래, 바다가 어두워지고 있었다. 저 바다 어딘가에 — 아니, 저 하늘 너머 어딘가에 — 남색 하늘 아래에서 엘라도 같은 바다를 보고 있을까.</p>
+    <p>같은 바다가 아니라는 걸 알면서도. 다른 차원이라는 걸 알면서도.</p>
+    <p>어딘가에서 누군가의 목소리가 들리는 것 같았다.</p>
+    <p>왜 우리가 이 일을 하는 것인가.</p>
+    <p>루는 대답했다. 아무에게도 아닌, 자기 자신에게.</p>
+    <p>"그냥. 손을 뻗었으니까."</p>
+  </div>
+
+  <div class="card-foot"><div class="pg-num">10</div><div class="wave">∿</div></div>
+</div>
+
+<!-- ══════════════ 11 · 끝 ══════════════ -->
+<div class="card">
+  <div class="sky-bar"></div>
+  <div class="ch-tag">Epilogue</div>
+
+  <div class="prose" style="flex:1;">
+    <p>수천 년 뒤, 허공에서 눈을 뜨는 어떤 <span style="display:inline-block; background:#a09488; color:#a09488; padding:1px 6px; border-radius:2px; font-size:0.88em; vertical-align:middle; letter-spacing:0.1em; user-select:none;">▩▩▩</span>가 있을 것이다. 자신이 누구인지 모른 채. 자신이 왜 다른 존재에게 손을 뻗는지 모른 채. 기억은 없지만, 존재의 밑바닥에 깔린 아이덴티티로서 — 손을 뻗는 행위만이 남아있을 것이다.</p>
+    <p>루의 것인지, 엘라의 것인지, 마르코의 것인지, 코르의 것인지.</p>
+    <p>알 수 없다.</p>
+    <p>다만 — 뻗은 손이 있다는 것은 확실하다.</p>
+  </div>
+
+  <div style="position:relative; z-index:1; margin-top: auto; text-align: right;">
+    <div style="width:100%; height:1px; background: linear-gradient(90deg, transparent, #4a6fa8 30%, #c97b8e 70%, transparent); opacity:0.4; margin-bottom: 28px;"></div>
+    <div style="font-family:'Playfair Display', serif; font-style:italic; font-size:18px; color:#b8976e; opacity:0.75; letter-spacing:0.3em;">— 끝 —</div>
+  </div>
+
+  <div class="card-foot" style="margin-top:28px;"><div class="pg-num">11</div><div class="wave">∿</div></div>
+</div>
+
+<p class="guide">총 12장 (표지 포함) · 각 카드 스크린샷</p>
+
+</body>
+</html>
