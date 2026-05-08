@@ -562,5 +562,77 @@
     "summary": "SQLite + Chroma 이중 저장. 3단계 점진적 공개로 토큰 10배 절약. 59.3K stars.",
     "use_when": "Claude Code 세션 간 메모리 관리를 강화할 때",
     "verified_at": "2026-05-08"
+  },
+  {
+    "id": "hermes-agent",
+    "title": "Hermes Agent",
+    "category": "에이전트",
+    "tags": ["에이전트", "오픈소스", "멀티에이전트", "작업추적"],
+    "related": ["claude-code-best-practice"],
+    "status": "active",
+    "url": "https://github.com/NousResearch/hermes-agent",
+    "summary": "NousResearch의 자기학습 에이전트. /goal 목표 추적, Kanban 멀티에이전트 보드, zombie 감지, 환각 복구. 95.6K stars.",
+    "use_when": "에이전트 작업 지속성·목표 추적 개념 참고 시",
+    "verified_at": "2026-05-08"
+  },
+  {
+    "id": "anthropic-onboarding",
+    "title": "Anthropic 신입 온보딩 패턴",
+    "category": "방법론",
+    "tags": ["Anthropic공식", "에이전트", "방법론", "ClaudeCode"],
+    "related": ["claude-code-best-practice", "ssl-skill-standard"],
+    "status": "active",
+    "url": "https://claude.com/blog/onboarding-claude-code-like-a-new-developer-lessons-from-17-years-of-development",
+    "summary": "Claude를 신입처럼 온보딩. Skills 라이브러리, 맥락은 관리 인공물, 단계적 학습 패턴.",
+    "use_when": "스킬 설계·에이전트 훈련 방법론 참고 시",
+    "verified_at": "2026-05-08"
+  },
+  {
+    "id": "anthropic-managed-agents",
+    "title": "Anthropic Managed Agents",
+    "category": "에이전트",
+    "tags": ["Anthropic공식", "에이전트", "멀티에이전트", "메모리"],
+    "related": ["anthropic-3patterns", "anthropic-onboarding"],
+    "status": "active",
+    "url": "https://claude.com/blog/new-in-claude-managed-agents",
+    "summary": "Dreaming(패턴학습), Outcomes(자동채점), Multiagent(위임), Memory(파일시스템 기반). Harvey 6x 완료율.",
+    "use_when": "에이전트 메모리·자동채점·멀티에이전트 아키텍처 참고 시",
+    "verified_at": "2026-05-08"
+  },
+  {
+    "id": "anthropic-prompt-caching",
+    "title": "Anthropic 프롬프트 캐싱 가이드",
+    "category": "방법론",
+    "tags": ["Anthropic공식", "비용절감", "캐싱", "ClaudeCode"],
+    "related": ["anthropic-onboarding"],
+    "status": "active",
+    "url": "https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything",
+    "summary": "캐시 적중률=비용·속도 핵심. 5분 TTL, 정적→동적 정렬, 도구 추가/제거 금지, 컴팩션 지시문.",
+    "use_when": "Claude Code 비용·속도 최적화 이해 시",
+    "verified_at": "2026-05-08"
+  },
+  {
+    "id": "anthropic-agentic-pm",
+    "title": "에이전틱 시대 제품 개발",
+    "category": "방법론",
+    "tags": ["Anthropic공식", "에이전트", "방법론", "기획"],
+    "related": ["anthropic-managed-agents"],
+    "status": "active",
+    "url": "https://claude.com/blog/product-development-in-the-agentic-era",
+    "summary": "PM=프로토타이퍼. 탐색(대화)→자동화(에이전트) 이중접근. 반복행정 에이전트화, 창의적 작업 집중.",
+    "use_when": "비개발자 디렉터의 에이전트 운용 철학 참고 시",
+    "verified_at": "2026-05-08"
+  },
+  {
+    "id": "anthropic-agent-memory",
+    "title": "Anthropic Agent Memory",
+    "category": "에이전트",
+    "tags": ["Anthropic공식", "메모리", "에이전트"],
+    "related": ["anthropic-managed-agents", "claude-mem"],
+    "status": "active",
+    "url": "https://claude.com/blog/claude-managed-agents-memory",
+    "summary": "파일시스템 기반 메모리. 조직(읽기전용)+개별(읽기쓰기) 권한분리. Rakuten 오류97%↓, 비용27%↓.",
+    "use_when": "에이전트 메모리 아키텍처·권한 분리 설계 시",
+    "verified_at": "2026-05-08"
   }
 ]
