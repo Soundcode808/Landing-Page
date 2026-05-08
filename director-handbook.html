@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>디렉터를 위한 AI 개념 가이드</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0d0d1a;
+      --card-bg:      #141428;
+      --card-border:  #1e1e40;
+      --gold:         #e2b714;
+      --gold-dim:     #a07f0a;
+      --gold-glow:    rgba(226, 183, 20, 0.15);
+      --text:         #e8e8f0;
+      --text-muted:   #8888aa;
+      --text-dim:     #5555778a;
+      --accent-blue:  #4a6fa5;
+      --accent-teal:  #2a9d8f;
+      --accent-red:   #e76f51;
+      --success:      #57cc99;
+      --radius:       20px;
+      --card-max:     480px;
+      --transition:   0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ─── Layout Shell ──────────────────────────────────────────── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      height: 100dvh;
+      max-width: var(--card-max);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ─── Top Bar ───────────────────────────────────────────────── */
+    #topbar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 10px;
+      z-index: 10;
+    }
+
+    #topbar .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    #progress-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ─── Progress Bar ──────────────────────────────────────────── */
+    #progress-bar-wrap {
+      flex-shrink: 0;
+      padding: 0 20px 8px;
+    }
+
+    #progress-bar-track {
+      height: 3px;
+      background: var(--card-border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    #progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      border-radius: 99px;
+      transition: width var(--transition);
+    }
+
+    /* ─── Stage ─────────────────────────────────────────────────── */
+    #stage {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      padding: 6px 12px;
+    }
+
+    /* ─── Cards ─────────────────────────────────────────────────── */
+    .card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px 26px 24px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      /* start hidden */
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(60px) scale(0.97);
+      transition:
+        opacity var(--transition),
+        transform var(--transition);
+      will-change: transform, opacity;
+    }
+
+    .card::-webkit-scrollbar { display: none; }
+
+    .card.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0) scale(1);
+    }
+
+    .card.exit-left {
+      opacity: 0;
+      transform: translateX(-60px) scale(0.97);
+    }
+
+    .card.enter-right {
+      opacity: 0;
+      transform: translateX(60px) scale(0.97);
+    }
+
+    .card.exit-right {
+      opacity: 0;
+      transform: translateX(60px) scale(0.97);
+    }
+
+    .card.enter-left {
+      opacity: 0;
+      transform: translateX(-60px) scale(0.97);
+    }
+
+    /* ─── Card Variants ─────────────────────────────────────────── */
+    /* Intro card */
+    .card--intro {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    /* Outro card */
+    .card--outro {
+      gap: 16px;
+    }
+
+    /* ─── Card Content Elements ─────────────────────────────────── */
+    .card__icon {
+      font-size: 72px;
+      line-height: 1;
+      display: block;
+      filter: drop-shadow(0 0 16px var(--gold-glow));
+      animation: icon-breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes icon-breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    .card__tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-glow);
+      border: 1px solid rgba(226, 183, 20, 0.3);
+      border-radius: 99px;
+      padding: 4px 12px;
+    }
+
+    .card__title {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text);
+      margin-top: 6px;
+      word-break: keep-all;
+    }
+
+    .card__subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      word-break: keep-all;
+      margin-top: 2px;
+    }
+
+    .card__divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+      margin: 14px 0;
+    }
+
+    .card__keypoint {
+      background: rgba(226, 183, 20, 0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      word-break: keep-all;
+    }
+
+    .card__keypoint strong {
+      color: var(--gold);
+    }
+
+    .card__example {
+      background: rgba(74, 111, 165, 0.12);
+      border: 1px solid rgba(74, 111, 165, 0.3);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text-muted);
+      word-break: keep-all;
+    }
+
+    .card__example .ex-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .card__example em {
+      color: var(--text);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ─── Visual Blocks ─────────────────────────────────────────── */
+    .visual {
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 4px;
+    }
+
+    /* Comparison row */
+    .cmp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .cmp__item {
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .cmp__item--bad {
+      background: rgba(231, 111, 81, 0.1);
+      border: 1px solid rgba(231, 111, 81, 0.3);
+    }
+
+    .cmp__item--good {
+      background: rgba(87, 204, 153, 0.1);
+      border: 1px solid rgba(87, 204, 153, 0.3);
+    }
+
+    .cmp__icon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .cmp__label { font-size: 13px; font-weight: 600; }
+    .cmp__item--bad .cmp__label { color: var(--accent-red); }
+    .cmp__item--good .cmp__label { color: var(--success); }
+    .cmp__note { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+    /* YAML block */
+    .yaml-block {
+      background: #0a0a18;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+      color: #aaa;
+    }
+
+    .yaml-block .y-fence { color: var(--gold); font-weight: 700; }
+    .yaml-block .y-key   { color: #7ec8e3; }
+    .yaml-block .y-val   { color: var(--success); }
+    .yaml-block .y-comment { color: #555577; }
+
+    /* Flow arrows */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    .flow__step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(30, 30, 64, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      font-size: 13px;
+      width: 100%;
+      word-break: keep-all;
+    }
+
+    .flow__step .step-icon { font-size: 18px; flex-shrink: 0; }
+    .flow__step .step-text { color: var(--text); line-height: 1.4; }
+    .flow__step .step-text small { color: var(--text-muted); font-size: 11px; display: block; }
+
+    .flow__arrow {
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      height: 20px;
+      color: var(--gold);
+      font-size: 14px;
+      opacity: 0.6;
+    }
+
+    /* Memory bar */
+    .mem-bar-wrap { margin-top: 4px; }
+    .mem-bar-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .mem-bar {
+      height: 22px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .mem-bar__fill {
+      height: 100%;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #fff;
+      transition: width 1.2s ease;
+    }
+
+    .mem-bar--low  .mem-bar__fill { background: linear-gradient(90deg, var(--success), #2a9d8f); width: 30%; }
+    .mem-bar--mid  .mem-bar__fill { background: linear-gradient(90deg, #e9c46a, #f4a261); width: 65%; }
+    .mem-bar--high .mem-bar__fill { background: linear-gradient(90deg, #f4a261, var(--accent-red)); width: 95%; }
+
+    .mem-bar--high::after {
+      content: '⚠';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-red);
+      font-size: 14px;
+    }
+
+    /* Plug grid */
+    .plug-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .plug-item {
+      background: rgba(42, 157, 143, 0.08);
+      border: 1px solid rgba(42, 157, 143, 0.25);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .plug-item .plug-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .plug-item .plug-name { font-size: 11px; color: var(--text-muted); }
+
+    /* Agent grid */
+    .agent-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .agent-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(74, 111, 165, 0.08);
+      border: 1px solid rgba(74, 111, 165, 0.2);
+      border-radius: 10px;
+      padding: 8px 12px;
+    }
+
+    .agent-row .a-icon { font-size: 18px; }
+    .agent-row .a-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .agent-row .a-task { font-size: 11px; color: var(--text-muted); }
+
+    /* Two-col table */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .two-col__cell {
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .two-col__cell--a {
+      background: rgba(74, 111, 165, 0.1);
+      border: 1px solid rgba(74, 111, 165, 0.3);
+    }
+
+    .two-col__cell--b {
+      background: rgba(226, 183, 20, 0.07);
+      border: 1px solid rgba(226, 183, 20, 0.25);
+    }
+
+    .two-col__head {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .two-col__cell--a .two-col__head { color: var(--accent-blue); }
+    .two-col__cell--b .two-col__head { color: var(--gold); }
+    .two-col__body { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    /* Pyramid */
+    .pyramid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pyramid__level {
+      border-radius: 10px;
+      padding: 10px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .pyramid__level:nth-child(1) {
+      width: 78%;
+      background: rgba(87, 204, 153, 0.12);
+      border: 1px solid rgba(87, 204, 153, 0.4);
+    }
+
+    .pyramid__level:nth-child(2) {
+      width: 88%;
+      background: rgba(233, 196, 106, 0.1);
+      border: 1px solid rgba(233, 196, 106, 0.35);
+    }
+
+    .pyramid__level:nth-child(3) {
+      width: 100%;
+      background: rgba(74, 111, 165, 0.1);
+      border: 1px solid rgba(74, 111, 165, 0.3);
+    }
+
+    .pyramid__badge { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; }
+    .pyramid__level:nth-child(1) .pyramid__badge { color: var(--success); }
+    .pyramid__level:nth-child(2) .pyramid__badge { color: #e9c46a; }
+    .pyramid__level:nth-child(3) .pyramid__badge { color: var(--accent-blue); }
+    .pyramid__desc { font-size: 11px; color: var(--text-muted); }
+
+    /* Conflict visual */
+    .conflict-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-box {
+      flex: 1;
+      background: rgba(30, 30, 64, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .doc-box em { color: var(--text); font-style: normal; }
+    .conflict-icon { font-size: 28px; flex-shrink: 0; }
+
+    /* Storage boxes */
+    .storage-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .storage-box {
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .storage-box--work {
+      background: rgba(74, 111, 165, 0.1);
+      border: 1px solid rgba(74, 111, 165, 0.3);
+    }
+
+    .storage-box--ref {
+      background: rgba(226, 183, 20, 0.08);
+      border: 1px solid rgba(226, 183, 20, 0.3);
+    }
+
+    .storage-box__icon { font-size: 28px; display: block; margin-bottom: 6px; }
+    .storage-box__label { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .storage-box--work .storage-box__label { color: var(--accent-blue); }
+    .storage-box--ref  .storage-box__label { color: var(--gold); }
+    .storage-box__path { font-size: 10px; color: var(--text-muted); font-family: monospace; margin-bottom: 6px; }
+    .storage-box__note { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Timeline */
+    .timeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .tl-snap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .tl-snap__dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(226, 183, 20, 0.15);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .tl-snap__label { font-size: 10px; color: var(--text-muted); text-align: center; }
+
+    .tl-line {
+      flex: 0 0 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      margin-bottom: 16px;
+    }
+
+    /* NER highlight */
+    .ner-text {
+      font-size: 14px;
+      line-height: 2;
+      background: #0a0a18;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text-muted);
+    }
+
+    .ner-tag {
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .ner-tag--char { background: rgba(226, 183, 20, 0.2); color: var(--gold); border: 1px solid rgba(226, 183, 20, 0.4); }
+    .ner-tag--place { background: rgba(42, 157, 143, 0.2); color: var(--accent-teal); border: 1px solid rgba(42, 157, 143, 0.4); }
+    .ner-tag--event { background: rgba(231, 111, 81, 0.2); color: var(--accent-red); border: 1px solid rgba(231, 111, 81, 0.4); }
+
+    .ner-legend {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ner-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .ner-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .ner-legend-dot--char  { background: var(--gold); }
+    .ner-legend-dot--place { background: var(--accent-teal); }
+    .ner-legend-dot--event { background: var(--accent-red); }
+
+    /* Graph nodes */
+    .graph-wrap {
+      position: relative;
+      height: 130px;
+      background: #0a0a18;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .graph-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* API arrows */
+    .api-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .api-box {
+      flex: 1;
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .api-box--prog {
+      background: rgba(74, 111, 165, 0.12);
+      border: 1px solid rgba(74, 111, 165, 0.3);
+    }
+
+    .api-box--ai {
+      background: rgba(226, 183, 20, 0.08);
+      border: 1px solid rgba(226, 183, 20, 0.3);
+    }
+
+    .api-box__icon { font-size: 28px; display: block; margin-bottom: 4px; }
+    .api-box__label { font-size: 12px; font-weight: 600; }
+    .api-box--prog .api-box__label { color: var(--accent-blue); }
+    .api-box--ai   .api-box__label { color: var(--gold); }
+
+    .api-arrows {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .api-arrow {
+      font-size: 16px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .api-arrow--up   { color: var(--success); }
+    .api-arrow--down { color: var(--accent-blue); }
+
+    /* Ontology tree */
+    .onto-tree {
+      font-size: 12px;
+      font-family: 'SF Mono', monospace;
+      background: #0a0a18;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      line-height: 2;
+    }
+
+    .onto-tree .ot-root  { color: var(--gold); font-weight: 700; }
+    .onto-tree .ot-mid   { color: var(--accent-teal); }
+    .onto-tree .ot-leaf  { color: var(--text-muted); }
+    .onto-tree .ot-rel   { color: rgba(226, 183, 20, 0.5); font-size: 10px; }
+
+    /* Outro flow */
+    .outro-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .outro-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(20, 20, 40, 0.8);
+    }
+
+    .outro-step__num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #000;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .outro-step__content .step-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .outro-step__content .step-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; line-height: 1.5; word-break: keep-all; }
+
+    .outro-connector {
+      height: 18px;
+      margin-left: 25px;
+      border-left: 2px dashed rgba(226, 183, 20, 0.3);
+    }
+
+    /* Intro */
+    .intro-logo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .intro-title {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.2;
+      color: var(--text);
+      word-break: keep-all;
+    }
+
+    .intro-title span { color: var(--gold); }
+
+    .intro-sub {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      word-break: keep-all;
+      font-style: italic;
+    }
+
+    .intro-tap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #0d0d1a;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: 99px;
+      padding: 12px 28px;
+      margin-top: 8px;
+      animation: tap-pulse 2s ease-in-out infinite;
+      cursor: pointer;
+      border: none;
+      letter-spacing: 0.02em;
+    }
+
+    @keyframes tap-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(226, 183, 20, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(226, 183, 20, 0); }
+    }
+
+    .intro-count {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ─── Bottom Nav ─────────────────────────────────────────────── */
+    #bottom-nav {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px 20px;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-btn:hover { background: var(--card-border); }
+    .nav-btn:active { transform: scale(0.92); }
+    .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+    .nav-btn--next {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0d0d1a;
+      font-weight: 700;
+    }
+
+    .nav-btn--next:hover { background: #f0c820; }
+
+    #dot-nav {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--card-border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .dot.active {
+      background: var(--gold);
+      transform: scale(1.4);
+    }
+
+    .dot:hover { background: var(--text-muted); }
+
+    /* Responsive */
+    @media (min-width: 500px) {
+      #app {
+        padding-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- Top bar -->
+  <div id="topbar">
+    <span class="label">ASTRAL NOVA</span>
+    <span id="progress-text">0 / 20</span>
+  </div>
+
+  <!-- Progress bar -->
+  <div id="progress-bar-wrap">
+    <div id="progress-bar-track">
+      <div id="progress-bar-fill"></div>
+    </div>
+  </div>
+
+  <!-- Cards stage -->
+  <div id="stage">
+
+    <!-- ══ CARD 0: Intro ══════════════════════════════════════════ -->
+    <div class="card card--intro" data-index="0">
+      <div class="card__icon" style="animation-delay:0s">🎬</div>
+      <p class="intro-logo">DIRECTOR'S HANDBOOK</p>
+      <h1 class="intro-title">디렉터를 위한<br /><span>AI 개념 가이드</span></h1>
+      <p class="intro-sub">"시킬 수 있는 게 뭔지 알아야<br />시킬 수 있다"</p>
+      <button class="intro-tap" onclick="goNext()">시작하기 →</button>
+      <p class="intro-count">총 20개 카드 · 좌우 스와이프</p>
+    </div>
+
+    <!-- ══ CARD 1: 마크다운 ═══════════════════════════════════════ -->
+    <div class="card" data-index="1">
+      <span class="card__icon">📝</span>
+      <span class="card__tag">파일 기초 · 01</span>
+      <h2 class="card__title">마크다운<br />AI와 사람이 같이 읽는 문서</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        Word·HWP는 AI가 제대로 못 읽는다.<br />
+        <strong>마크다운</strong>은 메모장에 <strong>#</strong>과 <strong>-</strong>를 쳐서 구조를 만드는 방식 — AI가 바로 처리한다.
+      </div>
+      <div class="visual">
+        <div class="cmp">
+          <div class="cmp__item cmp__item--bad">
+            <span class="cmp__icon">📄</span>
+            <span class="cmp__label">❌ .docx / .hwp</span>
+            <p class="cmp__note">AI가 읽기 어려움<br />구조 인식 실패</p>
+          </div>
+          <div class="cmp__item cmp__item--good">
+            <span class="cmp__icon">📝</span>
+            <span class="cmp__label">✅ .md</span>
+            <p class="cmp__note">AI가 바로 처리<br />GitHub 자동 렌더링</p>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        <em>세계관-결정록.md</em>가 마크다운인 이유 — 에이전트들이 직접 읽고, 수정하고, 커밋한다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 2: YAML frontmatter ══════════════════════════════ -->
+    <div class="card" data-index="2">
+      <span class="card__icon">🏷️</span>
+      <span class="card__tag">파일 기초 · 02</span>
+      <h2 class="card__title">YAML<br />파일의 이름표</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        파일 맨 위 <strong>---</strong>로 감싼 구역.<br />
+        사람이 안 읽어도 AI가 먼저 본다. 책 표지의 ISBN 같은 것.
+      </div>
+      <div class="visual">
+        <div class="yaml-block">
+          <span class="y-fence">---</span><br />
+          <span class="y-key">status</span>: <span class="y-val">confirmed</span>&nbsp;&nbsp;<span class="y-comment"># AI가 확정 설정으로 인식</span><br />
+          <span class="y-key">category</span>: <span class="y-val">worldbuilding</span><br />
+          <span class="y-key">last-updated</span>: <span class="y-val">2026-05-08</span><br />
+          <span class="y-fence">---</span>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        <em>status: confirmed</em>가 붙으면 에이전트가 이 설정을 "기준점"으로 인식 — 초안 아이디어와 뒤섞지 않는다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 3: CLAUDE.md ══════════════════════════════════════ -->
+    <div class="card" data-index="3">
+      <span class="card__icon">📋</span>
+      <span class="card__tag">파일 기초 · 03</span>
+      <h2 class="card__title">CLAUDE.md<br />사무실 벽 포스터</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        프로젝트마다 딱 하나. Claude가 세션을 시작할 때 <strong>자동으로 읽는 규칙서</strong>.<br />
+        한 번만 써두면 매번 설명 안 해도 된다.
+      </div>
+      <div class="visual">
+        <div class="flow">
+          <div class="flow__step">
+            <span class="step-icon">▶️</span>
+            <div class="step-text">새 Claude 세션 시작</div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">📋</span>
+            <div class="step-text">CLAUDE.md 자동 로드</div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">⚙️</span>
+            <div class="step-text">규칙 적용<small>허밍 금지 · 에이전트 구조 · 용어 인식</small></div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">✅</span>
+            <div class="step-text">작업 시작</div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        허밍 금지, 에이전트 구조, 용어 정의, 음성 오인식 보정 — 전부 여기 저장돼 있다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 4: 폴더 구조 ══════════════════════════════════════ -->
+    <div class="card" data-index="4">
+      <span class="card__icon">📁</span>
+      <span class="card__tag">파일 기초 · 04</span>
+      <h2 class="card__title">폴더 구조<br />AI가 파일을 찾는 지도</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        <strong>파일 위치가 맥락이다.</strong><br />
+        아무 데나 두면 AI가 "이게 세계관 설정이야, 스킬 파일이야?" 헷갈린다.
+      </div>
+      <div class="visual">
+        <div class="yaml-block" style="line-height:2">
+          <span class="y-val">현장연구소/</span><br />
+          <span style="color:#555577">├─ </span><span class="y-fence">CLAUDE.md</span>&nbsp;&nbsp;<span class="y-comment"># 규칙서</span><br />
+          <span style="color:#555577">├─ </span><span class="y-key">세계관-결정록.md</span>&nbsp;&nbsp;<span class="y-comment"># 확정 설정</span><br />
+          <span style="color:#555577">└─ </span><span class="y-val">.claude/</span><br />
+          <span style="color:#555577">&nbsp;&nbsp;&nbsp;└─ </span><span class="y-val">skills/</span><br />
+          <span style="color:#555577">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ </span><span class="y-key">편집국.md</span><br />
+          <span style="color:#555577">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ </span><span class="y-key">카산드라.md</span>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        <em>.claude/skills/</em> 안에 스킬, <em>세계관/</em> 안에 설정 — 위치만 봐도 AI가 역할을 안다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 5: 스킬 ═══════════════════════════════════════════ -->
+    <div class="card" data-index="5">
+      <span class="card__icon">🎭</span>
+      <span class="card__tag">AI 구조 · 05</span>
+      <h2 class="card__title">스킬<br />AI한테 역할을 입히는 것</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        <strong>/편집국</strong> 치면 세계관 편집자로 변신.<br />
+        <strong>/카산드라</strong> 치면 예언자 문체로 글을 쓴다.<br />
+        배우한테 대본을 주는 것.
+      </div>
+      <div class="visual">
+        <div class="flow">
+          <div class="flow__step">
+            <span class="step-icon">👤</span>
+            <div class="step-text">/편집국 입력</div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">📄</span>
+            <div class="step-text">.claude/skills/편집국.md 로드<small>역할 · 규칙 · 말투 주입</small></div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">🎭</span>
+            <div class="step-text">편집국 모드로 응답 시작</div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">핵심 이점</span>
+        매번 "너는 세계관 편집자야, 이런 방식으로 해줘"를 타이핑하지 않아도 된다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 6: 서브에이전트 ══════════════════════════════════ -->
+    <div class="card" data-index="6">
+      <span class="card__icon">👥</span>
+      <span class="card__tag">AI 구조 · 06</span>
+      <h2 class="card__title">서브에이전트<br />부하 직원 동시 투입</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        노아(메인 Claude)가 다른 AI를 여러 명 불러서<br />
+        <strong>각자 다른 일을 동시에</strong> 시키는 구조.<br />
+        순서대로 하면 3~4배 오래 걸린다.
+      </div>
+      <div class="visual">
+        <div style="text-align:center; margin-bottom: 10px;">
+          <div class="flow__step" style="justify-content:center; background: rgba(226,183,20,0.08); border-color: rgba(226,183,20,0.3);">
+            <span class="step-icon">🎯</span>
+            <div class="step-text" style="color: var(--gold); font-weight:700;">노아 오케스트레이터</div>
+          </div>
+        </div>
+        <div class="agent-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="agent-row">
+            <span class="a-icon">🔬</span>
+            <div><div class="a-name">AG-01</div><div class="a-task">정보 분석</div></div>
+          </div>
+          <div class="agent-row">
+            <span class="a-icon">🤖</span>
+            <div><div class="a-name">AG-011</div><div class="a-task">AI 심층 분석</div></div>
+          </div>
+          <div class="agent-row">
+            <span class="a-icon">🔍</span>
+            <div><div class="a-name">서브 A</div><div class="a-task">자료 수집</div></div>
+          </div>
+          <div class="agent-row">
+            <span class="a-icon">📊</span>
+            <div><div class="a-name">서브 B</div><div class="a-task">비교 검토</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        A조 4명이 동시에 조사 — 결과를 노아가 합성해서 베스퍼님께 보고.
+      </div>
+    </div>
+
+    <!-- ══ CARD 7: 컨텍스트 윈도우 ══════════════════════════════ -->
+    <div class="card" data-index="7">
+      <span class="card__icon">🪟</span>
+      <span class="card__tag">AI 구조 · 07</span>
+      <h2 class="card__title">컨텍스트 윈도우<br />AI의 책상 크기</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        AI가 한 번에 기억할 수 있는 한계.<br />
+        <strong>세션이 길어지면 앞 내용을 밀어낸다</strong> — 세션 후반에 초반 설정과 다른 말 하는 이유.
+      </div>
+      <div class="visual">
+        <div class="mem-bar-wrap">
+          <div class="mem-bar-label"><span>세션 초반</span><span>여유 있음</span></div>
+          <div class="mem-bar mem-bar--low"><div class="mem-bar__fill">30%</div></div>
+          <div class="mem-bar-label"><span>세션 중반</span><span>조심할 것</span></div>
+          <div class="mem-bar mem-bar--mid"><div class="mem-bar__fill">65%</div></div>
+          <div class="mem-bar-label"><span>세션 후반</span><span>초반 내용 밀려남</span></div>
+          <div class="mem-bar mem-bar--high"><div class="mem-bar__fill">95%</div></div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">대응책</span>
+        핵심 규칙은 <em>CLAUDE.md</em>에 고정 · 세션 분리 · <em>START-HERE.md</em>로 이어받기.
+      </div>
+    </div>
+
+    <!-- ══ CARD 8: MCP ════════════════════════════════════════════ -->
+    <div class="card" data-index="8">
+      <span class="card__icon">🔌</span>
+      <span class="card__tag">AI 구조 · 08</span>
+      <h2 class="card__title">MCP<br />AI에 손발 달아주기</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        AI가 크롬, GitHub, DB 같은<br />
+        <strong>외부 도구를 직접 쓸 수 있게</strong> 연결하는 표준 규격.<br />
+        MCP 없으면 AI는 말만 한다.
+      </div>
+      <div class="visual">
+        <div class="plug-grid">
+          <div class="plug-item">
+            <span class="plug-icon">🌐</span>
+            <span class="plug-name">Chrome</span>
+          </div>
+          <div class="plug-item">
+            <span class="plug-icon">🐙</span>
+            <span class="plug-name">GitHub</span>
+          </div>
+          <div class="plug-item">
+            <span class="plug-icon">🗄️</span>
+            <span class="plug-name">Database</span>
+          </div>
+          <div class="plug-item">
+            <span class="plug-icon">💬</span>
+            <span class="plug-name">Telegram</span>
+          </div>
+          <div class="plug-item">
+            <span class="plug-icon">📁</span>
+            <span class="plug-name">파일 시스템</span>
+          </div>
+          <div class="plug-item">
+            <span class="plug-icon">🔧</span>
+            <span class="plug-name">기타 도구</span>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        MCP로 GitHub 연결 → AI가 직접 커밋 · 푸시. Telegram MCP → AI가 직접 메시지 수신.
+      </div>
+    </div>
+
+    <!-- ══ CARD 9: 프롬프트 vs 온톨로지 ══════════════════════════ -->
+    <div class="card" data-index="9">
+      <span class="card__icon">⚖️</span>
+      <span class="card__tag">개념 비교 · 09</span>
+      <h2 class="card__title">프롬프트 vs 온톨로지</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        <strong>프롬프트</strong> = "오늘 이것 해줘" — 매번 설명.<br />
+        <strong>온톨로지</strong> = "업무 매뉴얼" — 한 번 만들면 계속.
+      </div>
+      <div class="visual">
+        <div class="two-col">
+          <div class="two-col__cell two-col__cell--a">
+            <div class="two-col__head">💬 프롬프트</div>
+            <div class="two-col__body">
+              그때그때 말로 지시<br /><br />
+              매번 설명 필요<br /><br />
+              즉각 사용 가능<br /><br />
+              <em style="color:var(--accent-blue)">예: 스킬 호출 명령</em>
+            </div>
+          </div>
+          <div class="two-col__cell two-col__cell--b">
+            <div class="two-col__head">🧠 온톨로지</div>
+            <div class="two-col__body">
+              체계적인 지식 구조<br /><br />
+              구축 비용 큼<br /><br />
+              반영구적 효과<br /><br />
+              <em style="color:var(--gold)">예: 세계관-결정록.md</em>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">핵심 통찰</span>
+        편집국 시스템 전체가 아스트랄 노바의 온톨로지. 구조를 쌓을수록 설명이 줄어든다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 10: 권위 계층 ════════════════════════════════════ -->
+    <div class="card" data-index="10">
+      <span class="card__icon">🏛️</span>
+      <span class="card__tag">세계관 관리 · 10</span>
+      <h2 class="card__title">권위 계층<br />확정 / 초안 / 미정 구분</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        모든 설정이 같은 무게면 AI가 판단할 수 없다.<br />
+        <strong>확정이 기준점(닻)</strong>이 되어야 흔들리지 않는다.
+      </div>
+      <div class="visual">
+        <div class="pyramid">
+          <div class="pyramid__level">
+            <span class="pyramid__badge">✅ CONFIRMED — 확정</span>
+            <span class="pyramid__desc">기준점. 어떤 에이전트도 건드리지 않음</span>
+          </div>
+          <div class="pyramid__level">
+            <span class="pyramid__badge">🔄 DRAFT — 초안</span>
+            <span class="pyramid__desc">검토 중. 수정 가능 설정</span>
+          </div>
+          <div class="pyramid__level">
+            <span class="pyramid__badge">⏳ PENDING — 미정</span>
+            <span class="pyramid__desc">아직 결정 전. 사용 보류</span>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        83개 <em>confirmed</em> 설정은 누구도 건드리지 않는다. pending은 편집국이 "미확정" 명시.
+      </div>
+    </div>
+
+    <!-- ══ CARD 11: 모순 감지 ════════════════════════════════════ -->
+    <div class="card" data-index="11">
+      <span class="card__icon">⚡</span>
+      <span class="card__tag">세계관 관리 · 11</span>
+      <h2 class="card__title">모순 감지<br />AI가 설정 충돌을 찾는다</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        문서가 50개 넘으면 <strong>사람이 모순을 못 잡는다.</strong><br />
+        AI가 confirmed 설정을 전부 읽고 충돌을 자동 스캔.
+      </div>
+      <div class="visual">
+        <div class="conflict-wrap">
+          <div class="doc-box">
+            <strong style="color:var(--success); font-size:11px;">문서 A</strong><br />
+            아카샤는 <em>과거 문명의<br />기억 저장소</em>
+          </div>
+          <div class="conflict-icon">⚡</div>
+          <div class="doc-box">
+            <strong style="color:var(--accent-red); font-size:11px;">문서 B</strong><br />
+            아카샤는 <em>미래 예언<br />기관</em>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top: 10px; font-size: 12px; color: var(--accent-red);">
+          → 편집국이 즉시 감지 · 베스퍼님께 알림
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">왜 필요한가</span>
+        세계관이 넓어질수록 모순은 기하급수적으로 늘어난다. AI가 없으면 수동으로 불가능.
+      </div>
+    </div>
+
+    <!-- ══ CARD 12: 이중저장 ═════════════════════════════════════ -->
+    <div class="card" data-index="12">
+      <span class="card__icon">📦</span>
+      <span class="card__tag">세계관 관리 · 12</span>
+      <h2 class="card__title">이중저장<br />서랍과 전시장</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        작업 메모(서랍)와 확정 지식(전시장)은<br />
+        <strong>반드시 따로 저장</strong>해야 섞이지 않는다.
+      </div>
+      <div class="visual">
+        <div class="storage-wrap">
+          <div class="storage-box storage-box--work">
+            <span class="storage-box__icon">🗂️</span>
+            <div class="storage-box__label">작업용 서랍</div>
+            <div class="storage-box__path">세션기록/NOA-SES-N.md</div>
+            <div class="storage-box__note">작업 중 메모<br />결정 과정 기록<br />수정 가능</div>
+          </div>
+          <div class="storage-box storage-box--ref">
+            <span class="storage-box__icon">🏛️</span>
+            <div class="storage-box__label">확정 전시장</div>
+            <div class="storage-box__path">세계관-결정록.md</div>
+            <div class="storage-box__note">확정 설정 백과<br />AI 기준 문서<br />함부로 수정 금지</div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">실수 패턴</span>
+        작업 메모가 세계관 설정으로 굳거나, 확정 설정이 메모 더미에 묻히는 것.
+      </div>
+    </div>
+
+    <!-- ══ CARD 13: Lint ══════════════════════════════════════════ -->
+    <div class="card" data-index="13">
+      <span class="card__icon">✅</span>
+      <span class="card__tag">자동화 · 13</span>
+      <h2 class="card__title">Lint<br />자동 맞춤법 검사기</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        문서 규칙 위반을 <strong>자동으로 잡아준다.</strong><br />
+        frontmatter 누락, 링크 깨짐, status 없는 항목 등.
+      </div>
+      <div class="visual">
+        <div class="flow">
+          <div class="flow__step">
+            <span class="step-icon">💾</span>
+            <div class="step-text">문서 저장 시도</div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">🔍</span>
+            <div class="step-text">Lint 자동 검증<small>frontmatter 확인 · 링크 검사 · 규칙 준수 여부</small></div>
+          </div>
+          <div class="flow__arrow">↓</div>
+          <div class="flow__step">
+            <span class="step-icon">✅</span>
+            <div class="step-text">통과 시 저장 / 실패 시 오류 알림</div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        편집국이 저장 전에 자동 검증 — 문서 100개가 넘어도 규칙 위반을 사람이 확인하지 않아도 된다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 14: Git/GitHub ════════════════════════════════════ -->
+    <div class="card" data-index="14">
+      <span class="card__icon">⏪</span>
+      <span class="card__tag">인프라 · 14</span>
+      <h2 class="card__title">Git<br />파일 타임머신</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        모든 변경을 기록. <strong>언제든 과거로 되돌린다.</strong><br />
+        GitHub = 그 기록을 인터넷에 올려두는 저장소.
+      </div>
+      <div class="visual">
+        <div class="timeline">
+          <div class="tl-snap">
+            <div class="tl-snap__dot">📝</div>
+            <div class="tl-snap__label">최초<br />작성</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-snap">
+            <div class="tl-snap__dot">✏️</div>
+            <div class="tl-snap__label">1차<br />수정</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-snap">
+            <div class="tl-snap__dot">🔄</div>
+            <div class="tl-snap__label">AI<br />커밋</div>
+          </div>
+          <div class="tl-line"></div>
+          <div class="tl-snap">
+            <div class="tl-snap__dot" style="border-color:var(--success)">⏪</div>
+            <div class="tl-snap__label">되돌리기<br />가능</div>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        <em>Landing-Page</em> 레포가 지식창고 — AI가 조사 결과를 직접 커밋해서 세션 간 지식을 축적한다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 15: API ═══════════════════════════════════════════ -->
+    <div class="card" data-index="15">
+      <span class="card__icon">📡</span>
+      <span class="card__tag">인프라 · 15</span>
+      <h2 class="card__title">API<br />프로그램이 AI한테 직접 말 거는 방법</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        채팅창 없이 <strong>프로그램이 AI에 질문하고 답을 받는다.</strong><br />
+        호출마다 비용 발생. 자동화의 핵심.
+      </div>
+      <div class="visual">
+        <div class="api-wrap">
+          <div class="api-box api-box--prog">
+            <span class="api-box__icon">💻</span>
+            <span class="api-box__label">프로그램<br />(자동화 스크립트)</span>
+          </div>
+          <div class="api-arrows">
+            <div class="api-arrow api-arrow--down">→ 질문 전송</div>
+            <div class="api-arrow api-arrow--up">← 답변 수신</div>
+          </div>
+          <div class="api-box api-box--ai">
+            <span class="api-box__icon">🤖</span>
+            <span class="api-box__label">AI 모델<br />(Claude / GPT)</span>
+          </div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        Claude와 Codex(OpenAI)를 교차 검증 — 같은 질문을 두 AI에 보내고 답을 비교한다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 16: NER ═══════════════════════════════════════════ -->
+    <div class="card" data-index="16">
+      <span class="card__icon">🔍</span>
+      <span class="card__tag">기술 · 16</span>
+      <h2 class="card__title">NER<br />AI가 이름을 자동으로 찾는 기술</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        텍스트에서 <strong>캐릭터 · 지명 · 사건을 자동 태깅.</strong><br />
+        관계 지도를 자동으로 만들어낸다.
+      </div>
+      <div class="visual">
+        <div class="ner-text">
+          <span class="ner-tag ner-tag--char">아니마</span>가 <span class="ner-tag ner-tag--place">성역</span>에 들어서는 순간, <span class="ner-tag ner-tag--event">대다툼</span>의 기억이 <span class="ner-tag ner-tag--place">아카샤</span>에서 흘러나왔다.
+        </div>
+        <div class="ner-legend">
+          <div class="ner-legend-item"><div class="ner-legend-dot ner-legend-dot--char"></div>캐릭터</div>
+          <div class="ner-legend-item"><div class="ner-legend-dot ner-legend-dot--place"></div>장소</div>
+          <div class="ner-legend-item"><div class="ner-legend-dot ner-legend-dot--event"></div>사건</div>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        "아니마 50회 언급 · 성역과 33회 공동 등장" — 관계 지도가 자동 생성된다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 17: 그래프 DB ════════════════════════════════════ -->
+    <div class="card" data-index="17">
+      <span class="card__icon">🕸️</span>
+      <span class="card__tag">기술 · 17</span>
+      <h2 class="card__title">그래프 DB<br />관계를 그물로 저장</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        엑셀은 표, 그래프 DB는 <strong>관계도.</strong><br />
+        "아니마와 연관된 모든 것"을 한 번에 찾는다.
+      </div>
+      <div class="visual">
+        <div class="graph-wrap">
+          <svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg">
+            <!-- Edges -->
+            <line x1="200" y1="65" x2="100" y2="35" stroke="#e2b71440" stroke-width="1.5"/>
+            <line x1="200" y1="65" x2="100" y2="95" stroke="#e2b71440" stroke-width="1.5"/>
+            <line x1="200" y1="65" x2="310" y2="35" stroke="#4a6fa540" stroke-width="1.5"/>
+            <line x1="200" y1="65" x2="310" y2="95" stroke="#4a6fa540" stroke-width="1.5"/>
+            <line x1="100" y1="35" x2="100" y2="95" stroke="#2a9d8f30" stroke-width="1"/>
+            <line x1="310" y1="35" x2="310" y2="95" stroke="#2a9d8f30" stroke-width="1"/>
+            <!-- Center node -->
+            <circle cx="200" cy="65" r="26" fill="#1e1e40" stroke="#e2b714" stroke-width="2"/>
+            <text x="200" y="69" text-anchor="middle" fill="#e2b714" font-size="11" font-weight="700">아니마</text>
+            <!-- Satellite nodes -->
+            <circle cx="100" cy="35" r="20" fill="#1e1e40" stroke="#2a9d8f" stroke-width="1.5"/>
+            <text x="100" y="39" text-anchor="middle" fill="#2a9d8f" font-size="10">성역</text>
+            <circle cx="100" cy="95" r="20" fill="#1e1e40" stroke="#2a9d8f" stroke-width="1.5"/>
+            <text x="100" y="99" text-anchor="middle" fill="#2a9d8f" font-size="10">아카샤</text>
+            <circle cx="310" cy="35" r="20" fill="#1e1e40" stroke="#4a6fa5" stroke-width="1.5"/>
+            <text x="310" y="39" text-anchor="middle" fill="#4a6fa5" font-size="10">대다툼</text>
+            <circle cx="310" cy="95" r="20" fill="#1e1e40" stroke="#4a6fa5" stroke-width="1.5"/>
+            <text x="310" y="99" text-anchor="middle" fill="#4a6fa5" font-size="10">신위전쟁</text>
+            <!-- Edge labels -->
+            <text x="143" y="42" fill="#e2b71470" font-size="8">거주</text>
+            <text x="143" y="90" fill="#e2b71470" font-size="8">경험</text>
+            <text x="253" y="42" fill="#4a6fa570" font-size="8">연루</text>
+            <text x="253" y="90" fill="#4a6fa570" font-size="8">원인</text>
+          </svg>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        Neo4j/Graphiti — AI가 대화 중 자동으로 관계를 추출해서 그래프로 쌓아준다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 18: 온톨로지 ══════════════════════════════════════ -->
+    <div class="card" data-index="18">
+      <span class="card__icon">🧠</span>
+      <span class="card__tag">기술 · 18</span>
+      <h2 class="card__title">온톨로지<br />AI가 미리 아는 지식 체계</h2>
+      <div class="card__divider"></div>
+      <div class="card__keypoint">
+        단어 목록이 아니라 <strong>"A는 B의 상위 개념"</strong> 같은<br />
+        관계까지 정의한 지식 구조.<br />
+        온톨로지가 있으면 AI가 이미 안다.
+      </div>
+      <div class="visual">
+        <div class="onto-tree">
+          <span class="ot-root">🌐 ASTRAL NOVA 세계</span><br />
+          <span style="color:#333355">├─ </span><span class="ot-mid">존재 계층</span><br />
+          <span style="color:#333355">│ &nbsp;├─ </span><span class="ot-leaf">신위</span>&nbsp;<span class="ot-rel">⊃ 상위개념</span><br />
+          <span style="color:#333355">│ &nbsp;└─ </span><span class="ot-leaf">아니마</span>&nbsp;<span class="ot-rel">is-a 영자</span><br />
+          <span style="color:#333355">├─ </span><span class="ot-mid">공간 계층</span><br />
+          <span style="color:#333355">│ &nbsp;├─ </span><span class="ot-leaf">성역</span>&nbsp;<span class="ot-rel">belongs-to 아니마</span><br />
+          <span style="color:#333355">│ &nbsp;└─ </span><span class="ot-leaf">아카샤</span>&nbsp;<span class="ot-rel">type 기억저장소</span><br />
+          <span style="color:#333355">└─ </span><span class="ot-mid">사건 계층</span><br />
+          <span style="color:#333355">&nbsp;&nbsp;&nbsp;└─ </span><span class="ot-leaf">대다툼</span>&nbsp;<span class="ot-rel">caused-by 신위전쟁</span>
+        </div>
+      </div>
+      <div class="card__example">
+        <span class="ex-label">ASTRAL NOVA 사례</span>
+        편집국 시스템 자체가 아스트랄 노바의 온톨로지 — 구조가 쌓일수록 설명이 줄어든다.
+      </div>
+    </div>
+
+    <!-- ══ CARD 19: 폴더 구조 ════════════════════════════════════ -->
+    <div class="card card--outro" data-index="19">
+      <span class="card__icon" style="font-size:48px">🗺️</span>
+      <span class="card__tag">전체 흐름 요약</span>
+      <h2 class="card__title" style="font-size:22px;">세션 한 번의<br />전체 흐름</h2>
+      <div class="card__divider"></div>
+      <div class="outro-flow">
+        <div class="outro-step">
+          <div class="outro-step__num">1</div>
+          <div class="outro-step__content">
+            <div class="step-name">세션 시작</div>
+            <div class="step-desc">CLAUDE.md 자동 로드 → 규칙 인식</div>
+          </div>
+        </div>
+        <div class="outro-connector"></div>
+        <div class="outro-step">
+          <div class="outro-step__num">2</div>
+          <div class="outro-step__content">
+            <div class="step-name">스킬 호출</div>
+            <div class="step-desc">/편집국 · /카산드라 → 역할 전환</div>
+          </div>
+        </div>
+        <div class="outro-connector"></div>
+        <div class="outro-step">
+          <div class="outro-step__num">3</div>
+          <div class="outro-step__content">
+            <div class="step-name">에이전트 투입</div>
+            <div class="step-desc">A조 병렬 조사 · 노아가 합성</div>
+          </div>
+        </div>
+        <div class="outro-connector"></div>
+        <div class="outro-step">
+          <div class="outro-step__num">4</div>
+          <div class="outro-step__content">
+            <div class="step-name">검증</div>
+            <div class="step-desc">모순 감지 · Lint · 권위 계층 확인</div>
+          </div>
+        </div>
+        <div class="outro-connector"></div>
+        <div class="outro-step">
+          <div class="outro-step__num">5</div>
+          <div class="outro-step__content">
+            <div class="step-name">저장 · 축적</div>
+            <div class="step-desc">GitHub 커밋 → START-HERE.md 업데이트</div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center; font-size:13px; color:var(--text-muted); margin-top:12px;">
+        궁금한 개념은 좌우로 넘겨 다시 확인하세요
+      </p>
+    </div>
+
+  </div><!-- /stage -->
+
+  <!-- Bottom nav -->
+  <div id="bottom-nav">
+    <button class="nav-btn" id="btn-prev" onclick="goPrev()" aria-label="이전">←</button>
+    <div id="dot-nav"></div>
+    <button class="nav-btn nav-btn--next" id="btn-next" onclick="goNext()" aria-label="다음">→</button>
+  </div>
+</div><!-- /app -->
+
+<script>
+  (function () {
+    'use strict';
+
+    const TOTAL = 20; // 0-indexed: 0 (intro) + 18 content + 1 outro
+
+    let current = 0;
+    let isAnimating = false;
+
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const progressFill = document.getElementById('progress-bar-fill');
+    const progressText = document.getElementById('progress-text');
+    const dotNav = document.getElementById('dot-nav');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+
+    /* ── Build dot nav ─────────────────────────────────────────── */
+    for (let i = 0; i < TOTAL; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', `카드 ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotNav.appendChild(dot);
+    }
+
+    /* ── Render ────────────────────────────────────────────────── */
+    function render(next, direction) {
+      if (isAnimating) return;
+      const prev = current;
+
+      if (next === prev) return;
+      if (next < 0 || next >= TOTAL) return;
+
+      isAnimating = true;
+      const fromCard = cards[prev];
+      const toCard   = cards[next];
+
+      // Set initial position of incoming card
+      toCard.classList.remove('active', 'exit-left', 'exit-right', 'enter-left', 'enter-right');
+      toCard.classList.add(direction === 'next' ? 'enter-right' : 'enter-left');
+
+      // Force reflow so the class is applied before transition
+      void toCard.offsetWidth;
+
+      // Slide out current
+      fromCard.classList.remove('active');
+      fromCard.classList.add(direction === 'next' ? 'exit-left' : 'exit-right');
+
+      // Slide in next
+      toCard.classList.remove('enter-right', 'enter-left');
+      toCard.classList.add('active');
+
+      current = next;
+      updateUI();
+
+      setTimeout(() => {
+        fromCard.classList.remove('exit-left', 'exit-right');
+        isAnimating = false;
+      }, 400);
+    }
+
+    function goNext() {
+      render(current + 1, 'next');
+    }
+
+    function goPrev() {
+      render(current - 1, 'prev');
+    }
+
+    function goTo(index) {
+      const dir = index >= current ? 'next' : 'prev';
+      render(index, dir);
+    }
+
+    function updateUI() {
+      // Progress bar & text
+      const pct = TOTAL > 1 ? (current / (TOTAL - 1)) * 100 : 100;
+      progressFill.style.width = pct + '%';
+
+      if (current === 0) {
+        progressText.textContent = '시작';
+      } else if (current === TOTAL - 1) {
+        progressText.textContent = '완료';
+      } else {
+        progressText.textContent = current + ' / ' + (TOTAL - 2);
+      }
+
+      // Dots
+      const dots = dotNav.querySelectorAll('.dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
+
+      // Buttons
+      btnPrev.disabled = current === 0;
+      btnNext.disabled = current === TOTAL - 1;
+    }
+
+    /* ── Init ──────────────────────────────────────────────────── */
+    // Show first card without animation
+    cards.forEach((card, i) => {
+      card.classList.remove('active', 'exit-left', 'exit-right', 'enter-left', 'enter-right');
+    });
+    cards[0].classList.add('active');
+    updateUI();
+
+    // Expose to global scope (used by inline onclick)
+    window.goNext = goNext;
+    window.goPrev = goPrev;
+
+    /* ── Keyboard ──────────────────────────────────────────────── */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goNext();
+      if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goPrev();
+    });
+
+    /* ── Touch / Swipe ─────────────────────────────────────────── */
+    const MIN_SWIPE_DISTANCE = 50;
+    const MAX_VERTICAL_DEVIATION = 80;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+
+    const stage = document.getElementById('stage');
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const dt = Date.now() - touchStartTime;
+
+      // Reject if too slow, too short, or too vertical
+      if (dt > 600) return;
+      if (Math.abs(dx) < MIN_SWIPE_DISTANCE) return;
+      if (Math.abs(dy) > MAX_VERTICAL_DEVIATION) return;
+
+      if (dx < 0) goNext();
+      else goPrev();
+    }, { passive: true });
+
+  })();
+</script>
+</body>
+</html>
