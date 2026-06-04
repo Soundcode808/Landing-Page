@@ -5,7 +5,18 @@
 
 set -euo pipefail
 
-REPO_DIR="/opt/briefing/Landing-Page"
+# Windows Git Bash 경로 보정
+BRIEFING_ROOT="${BRIEFING_ROOT:-/c/opt/briefing}"
+REPO_DIR="${BRIEFING_ROOT}/Landing-Page"
+
+# .env 파일 로드 (토큰 등 민감 정보)
+ENV_FILE="${BRIEFING_ROOT}/.env"
+if [[ -f "$ENV_FILE" ]]; then
+  # shellcheck disable=SC1090
+  set -o allexport
+  source "$ENV_FILE"
+  set +o allexport
+fi
 TODAY=$(date +%Y-%m-%d)
 OUT="${REPO_DIR}/briefings/${TODAY}-raw.md"
 LOG_PREFIX="[$(date '+%Y-%m-%d %H:%M:%S')]"
