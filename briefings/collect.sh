@@ -125,6 +125,6 @@ if [[ -n "${TELEGRAM_BOT_TOKEN:-}" && -n "${TELEGRAM_CHAT_ID:-}" ]]; then
   curl -s -X POST \
     "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
     -d "chat_id=${TELEGRAM_CHAT_ID}" \
-    -d "text=🌅 ${TODAY} 브리핑 raw 수집 완료 (항목 ${LINE_COUNT}개). 노아한테 '오늘 브리핑 요약해줘' 하면 됩니다." \
+    -d "text=[Briefing] ${TODAY} collected (${LINE_COUNT} items). Ask Noah to summarize." \
     --silent --output /dev/null
 fi
