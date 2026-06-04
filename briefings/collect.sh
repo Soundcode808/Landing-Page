@@ -3,7 +3,7 @@
 # cron: 30 7 * * * /opt/briefing/collect.sh >> /opt/briefing/collect.log 2>&1
 # 환경변수 필요: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, GITHUB_TOKEN
 
-set -euo pipefail
+set -uo pipefail
 
 # Windows Git Bash 경로 보정
 BRIEFING_ROOT="${BRIEFING_ROOT:-/c/opt/briefing}"
