@@ -54,6 +54,7 @@ fetch_arxiv() {
   echo ""
 }
 
+{
 fetch_arxiv "https://rss.arxiv.org/rss/cs.SD"          "AI 음악 (cs.SD)"
 fetch_arxiv "https://rss.arxiv.org/rss/cs.CV"          "AI 이미지 (cs.CV)"
 fetch_arxiv "https://rss.arxiv.org/rss/cs.AI+cs.CL"   "LLM 종합 (cs.AI+cs.CL)"
@@ -63,8 +64,8 @@ fetch_hf() {
   local filter="$1" label="$2"
   local url="https://huggingface.co/api/models?filter=${filter}&sort=createdAt&direction=-1&limit=8"
   local json
-  json=$(curl -sfL --max-time 30 "$url") || { echo "⚠️ HF $label fetch 실패"; return; }
-  echo "## HuggingFace 신규 — ${label}"
+  json=$(curl -sfL --max-time 30 "$url") || { echo "HF $label fetch failed"; return; }
+  echo "## HuggingFace -- ${label}"
   echo "$json" \
     | grep -o '"id":"[^"]*"' \
     | sed 's/"id":"//;s/"//' \
@@ -73,28 +74,28 @@ fetch_hf() {
   echo ""
 }
 
-fetch_hf "text-to-audio"    "AI 음악"
-fetch_hf "text-to-image"    "AI 이미지"
-fetch_hf "text-to-video"    "AI 영상"
+fetch_hf "text-to-audio"    "AI Music"
+fetch_hf "text-to-image"    "AI Image"
+fetch_hf "text-to-video"    "AI Video"
 fetch_hf "text-to-3d"       "AI 3D"
 
-# ── HF 트렌딩 (좋아요·다운로드 급증) ─────────────────────
-echo "## HuggingFace 트렌딩 (전 도메인)"
+# ── HF 트렌딩 ─────────────────────────────────────────────
+echo "## HuggingFace Trending"
 curl -sfL --max-time 30 \
   "https://huggingface.co/api/models?sort=trending&limit=10" \
   | grep -o '"id":"[^"]*"' \
   | sed 's/"id":"//;s/"//' \
   | head -10 \
   | sed 's/^/- /' \
-  || echo "⚠️ HF 트렌딩 fetch 실패"
+  || echo "HF trending fetch failed"
 echo ""
 
 # ── 공식 블로그 RSS ───────────────────────────────────────
 fetch_blog() {
   local url="$1" label="$2"
   local xml
-  xml=$(curl -sfL --max-time 20 "$url") || { echo "⚠️ $label fetch 실패"; return; }
-  echo "## 공식 블로그 — ${label}"
+  xml=$(curl -sfL --max-time 20 "$url") || { echo "$label fetch failed"; return; }
+  echo "## Blog -- ${label}"
   echo "$xml" \
     | grep -o '<title>[^<]*' \
     | sed 's/<title>//' \
@@ -106,6 +107,7 @@ fetch_blog() {
 
 fetch_blog "https://www.unrealengine.com/en-US/feed" "Unreal Engine"
 fetch_blog "https://blog.unity.com/feed"             "Unity"
+} >> "$OUT"
 
 # ── GitHub 커밋 ──────────────────────────────────────────
 cd "$REPO_DIR"
