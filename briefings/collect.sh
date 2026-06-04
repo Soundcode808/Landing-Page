@@ -46,7 +46,8 @@ fetch_arxiv() {
   xml=$(curl -sfL --max-time 30 "$feed") || { echo "⚠️ arXiv $label fetch 실패"; return; }
   echo "## arXiv — ${label}"
   echo "$xml" \
-    | grep -oP '(?<=<title>)[^<]+' \
+    | grep -o '<title>[^<]*' \
+    | sed 's/<title>//' \
     | grep -v '^cs\.' \
     | head -10 \
     | sed 's/^/- /'
@@ -65,7 +66,8 @@ fetch_hf() {
   json=$(curl -sfL --max-time 30 "$url") || { echo "⚠️ HF $label fetch 실패"; return; }
   echo "## HuggingFace 신규 — ${label}"
   echo "$json" \
-    | grep -oP '"id"\s*:\s*"\K[^"]+' \
+    | grep -o '"id":"[^"]*"' \
+    | sed 's/"id":"//;s/"//' \
     | head -8 \
     | sed 's/^/- /'
   echo ""
@@ -80,7 +82,8 @@ fetch_hf "text-to-3d"       "AI 3D"
 echo "## HuggingFace 트렌딩 (전 도메인)"
 curl -sfL --max-time 30 \
   "https://huggingface.co/api/models?sort=trending&limit=10" \
-  | grep -oP '"id"\s*:\s*"\K[^"]+' \
+  | grep -o '"id":"[^"]*"' \
+  | sed 's/"id":"//;s/"//' \
   | head -10 \
   | sed 's/^/- /' \
   || echo "⚠️ HF 트렌딩 fetch 실패"
@@ -93,7 +96,8 @@ fetch_blog() {
   xml=$(curl -sfL --max-time 20 "$url") || { echo "⚠️ $label fetch 실패"; return; }
   echo "## 공식 블로그 — ${label}"
   echo "$xml" \
-    | grep -oP '(?<=<title>)[^<]+' \
+    | grep -o '<title>[^<]*' \
+    | sed 's/<title>//' \
     | grep -v '^$' \
     | head -3 \
     | sed 's/^/- /'
