@@ -3,8 +3,15 @@
     "id": "ace-step-ui",
     "title": "ACE-Step UI",
     "category": "음악",
-    "tags": ["음악", "로컬", "Suno대안", "BGM"],
-    "related": ["acestep-cpp"],
+    "tags": [
+      "음악",
+      "로컬",
+      "Suno대안",
+      "BGM"
+    ],
+    "related": [
+      "acestep-cpp"
+    ],
     "status": "active",
     "url": "https://threads.net/@conanssam",
     "summary": "로컬 AI 음악 생성 도구. 가사/BPM/키 제어 가능.",
@@ -15,8 +22,15 @@
     "id": "acestep-cpp",
     "title": "acestep-cpp",
     "category": "음악",
-    "tags": ["음악", "로컬", "C++", "Metal"],
-    "related": ["ace-step-ui"],
+    "tags": [
+      "음악",
+      "로컬",
+      "C++",
+      "Metal"
+    ],
+    "related": [
+      "ace-step-ui"
+    ],
     "status": "active",
     "url": "",
     "summary": "ACE-Step C++ 경량 버전. Mac Metal GPU 가속 지원.",
@@ -27,8 +41,16 @@
     "id": "trellis-2",
     "title": "TRELLIS-2",
     "category": "3D",
-    "tags": ["3D", "무료", "Microsoft", "PBR"],
-    "related": ["blender-connector", "seed3d-2"],
+    "tags": [
+      "3D",
+      "무료",
+      "Microsoft",
+      "PBR"
+    ],
+    "related": [
+      "blender-connector",
+      "seed3d-2"
+    ],
     "status": "active",
     "url": "https://threads.net/@techreee",
     "summary": "Microsoft 오픈소스. 이미지→3D 변환, PBR 텍스처 지원.",
@@ -39,8 +61,14 @@
     "id": "seed3d-2",
     "title": "Seed3D-2",
     "category": "3D",
-    "tags": ["3D", "ByteDance", "텍스트투3D"],
-    "related": ["trellis-2"],
+    "tags": [
+      "3D",
+      "ByteDance",
+      "텍스트투3D"
+    ],
+    "related": [
+      "trellis-2"
+    ],
     "status": "active",
     "url": "https://threads.net/@loose_inha",
     "summary": "ByteDance. 텍스트 또는 이미지→3D 모델 생성.",
@@ -51,8 +79,16 @@
     "id": "blender-connector",
     "title": "Blender-connector",
     "category": "3D",
-    "tags": ["3D", "MCP", "Claude공식", "자연어"],
-    "related": ["trellis-2", "seed3d-2"],
+    "tags": [
+      "3D",
+      "MCP",
+      "Claude공식",
+      "자연어"
+    ],
+    "related": [
+      "trellis-2",
+      "seed3d-2"
+    ],
     "status": "active",
     "url": "https://threads.net/@ivanivan.eth",
     "summary": "Claude 공식 Blender MCP 커넥터. 자연어로 3D 오브젝트 조작.",
@@ -63,7 +99,12 @@
     "id": "codex-2d-sprite",
     "title": "Codex-2D-sprite",
     "category": "3D-2D",
-    "tags": ["2D", "Codex", "스프라이트", "캐릭터"],
+    "tags": [
+      "2D",
+      "Codex",
+      "스프라이트",
+      "캐릭터"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@iamweeyong",
@@ -75,7 +116,12 @@
     "id": "pixelle-video",
     "title": "Pixelle-Video",
     "category": "영상",
-    "tags": ["영상", "자동화", "TTS", "BGM"],
+    "tags": [
+      "영상",
+      "자동화",
+      "TTS",
+      "BGM"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@k1utch_ai",
@@ -87,8 +133,16 @@
     "id": "ontology-webnovel-case",
     "title": "온톨로지-웹소설-사례",
     "category": "방법론",
-    "tags": ["온톨로지", "세계관", "웹소설", "검증됨"],
-    "related": ["tolaria", "obsidian-ai"],
+    "tags": [
+      "온톨로지",
+      "세계관",
+      "웹소설",
+      "검증됨"
+    ],
+    "related": [
+      "tolaria",
+      "obsidian-ai"
+    ],
     "status": "active",
     "url": "https://threads.net/@alex_ai_mcp",
     "summary": "온톨로지 기반 세계관 설계로 네이버 웹소설 2일 만에 1위 달성한 실제 사례.",
@@ -99,8 +153,15 @@
     "id": "tolaria",
     "title": "Tolaria",
     "category": "지식관리",
-    "tags": ["지식관리", "LLMWiki", "Git", "오프라인"],
-    "related": ["obsidian-ai"],
+    "tags": [
+      "지식관리",
+      "LLMWiki",
+      "Git",
+      "오프라인"
+    ],
+    "related": [
+      "obsidian-ai"
+    ],
     "status": "active",
     "url": "https://threads.net/@feelfree_ai",
     "summary": "LLM Wiki. 마크다운+Git 기반 지식베이스. Claude/Gemini 컨텍스트 최적화 구조.",
@@ -111,8 +172,15 @@
     "id": "obsidian-ai",
     "title": "Obsidian-AI",
     "category": "지식관리",
-    "tags": ["지식관리", "Obsidian", "자동구조화", "PKM"],
-    "related": ["tolaria"],
+    "tags": [
+      "지식관리",
+      "Obsidian",
+      "자동구조화",
+      "PKM"
+    ],
+    "related": [
+      "tolaria"
+    ],
     "status": "active",
     "url": "https://threads.net/@tofukyung",
     "summary": "자료를 던지면 AI가 자동 구조화해서 Obsidian vault에 정리.",
@@ -123,8 +191,16 @@
     "id": "design-md-standard",
     "title": "DESIGN-md-standard",
     "category": "디자인",
-    "tags": ["디자인", "표준", "Google공식", "브랜드"],
-    "related": ["voltagent-designs", "designmd-extractor"],
+    "tags": [
+      "디자인",
+      "표준",
+      "Google공식",
+      "브랜드"
+    ],
+    "related": [
+      "voltagent-designs",
+      "designmd-extractor"
+    ],
     "status": "active",
     "url": "https://threads.net/@peach.prompt",
     "summary": "구글 공식 DESIGN.md 표준 (2026-04-21 발표). AI용 브랜드 설명서 형식.",
@@ -135,8 +211,14 @@
     "id": "voltagent-designs",
     "title": "VoltAgent-designs",
     "category": "디자인",
-    "tags": ["디자인", "무료", "브랜드레퍼런스"],
-    "related": ["design-md-standard"],
+    "tags": [
+      "디자인",
+      "무료",
+      "브랜드레퍼런스"
+    ],
+    "related": [
+      "design-md-standard"
+    ],
     "status": "active",
     "url": "https://threads.net/@aicoffeechat",
     "summary": "Stripe/Apple/Notion 등 유명 브랜드 69개의 DESIGN.md 무료 제공.",
@@ -147,8 +229,14 @@
     "id": "designmd-extractor",
     "title": "DesignMD-extractor",
     "category": "디자인",
-    "tags": ["디자인", "Chrome확장", "자동추출"],
-    "related": ["design-md-standard"],
+    "tags": [
+      "디자인",
+      "Chrome확장",
+      "자동추출"
+    ],
+    "related": [
+      "design-md-standard"
+    ],
     "status": "active",
     "url": "https://threads.net/@lucas_flatwhite",
     "summary": "Chrome 확장. 웹사이트에서 DESIGN.md 자동 추출.",
@@ -159,7 +247,12 @@
     "id": "anthropic-3patterns",
     "title": "Anthropic-3patterns",
     "category": "에이전트",
-    "tags": ["에이전트", "Anthropic공식", "오케스트레이션", "패턴"],
+    "tags": [
+      "에이전트",
+      "Anthropic공식",
+      "오케스트레이션",
+      "패턴"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@vox.of.wilson",
@@ -171,7 +264,12 @@
     "id": "evolver",
     "title": "Evolver",
     "category": "에이전트",
-    "tags": ["에이전트", "프롬프트진화", "버전관리", "자동화"],
+    "tags": [
+      "에이전트",
+      "프롬프트진화",
+      "버전관리",
+      "자동화"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@hermes_agent_kr",
@@ -183,7 +281,12 @@
     "id": "pi-autoresearch",
     "title": "pi-autoresearch",
     "category": "에이전트",
-    "tags": ["에이전트", "가설검증", "자동실험", "루프"],
+    "tags": [
+      "에이전트",
+      "가설검증",
+      "자동실험",
+      "루프"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@probe.ai_",
@@ -195,7 +298,12 @@
     "id": "omc",
     "title": "OMC",
     "category": "에이전트",
-    "tags": ["에이전트", "오케스트레이션", "RateLimit", "ClaudeCode"],
+    "tags": [
+      "에이전트",
+      "오케스트레이션",
+      "RateLimit",
+      "ClaudeCode"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@bellman.pub",
@@ -207,7 +315,12 @@
     "id": "claude-skills",
     "title": "Claude-Skills",
     "category": "스킬시스템",
-    "tags": ["ClaudeSkills", "스킬", "프롬프트엔지니어링", "오픈소스"],
+    "tags": [
+      "ClaudeSkills",
+      "스킬",
+      "프롬프트엔지니어링",
+      "오픈소스"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@conanssam",
@@ -219,7 +332,12 @@
     "id": "printing-press",
     "title": "Printing-Press",
     "category": "도구제작",
-    "tags": ["CLI", "MCP대안", "자동생성", "비개발자"],
+    "tags": [
+      "CLI",
+      "MCP대안",
+      "자동생성",
+      "비개발자"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@hosi.oobo",
@@ -231,7 +349,12 @@
     "id": "chromex",
     "title": "Chromex",
     "category": "도구제작",
-    "tags": ["Chrome확장", "MCP", "Skills", "오픈소스"],
+    "tags": [
+      "Chrome확장",
+      "MCP",
+      "Skills",
+      "오픈소스"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -243,7 +366,12 @@
     "id": "cybersecurity-skills",
     "title": "Cybersecurity-Skills",
     "category": "보안",
-    "tags": ["보안", "ClaudeSkills", "Anthropic공식", "검증"],
+    "tags": [
+      "보안",
+      "ClaudeSkills",
+      "Anthropic공식",
+      "검증"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@unclejobs.ai",
@@ -255,7 +383,12 @@
     "id": "prd-auto",
     "title": "PRD-auto",
     "category": "기획",
-    "tags": ["기획", "PRD", "와이어프레임", "자동화"],
+    "tags": [
+      "기획",
+      "PRD",
+      "와이어프레임",
+      "자동화"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@yesleocan",
@@ -267,7 +400,12 @@
     "id": "trend-radar",
     "title": "TrendRadar",
     "category": "정보수집",
-    "tags": ["트렌드", "자동화", "모니터링", "오픈소스"],
+    "tags": [
+      "트렌드",
+      "자동화",
+      "모니터링",
+      "오픈소스"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@think.5x",
@@ -279,7 +417,11 @@
     "id": "youmind",
     "title": "YouMind",
     "category": "정보수집",
-    "tags": ["프롬프트", "트렌드", "큐레이션"],
+    "tags": [
+      "프롬프트",
+      "트렌드",
+      "큐레이션"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -291,7 +433,12 @@
     "id": "opencode-combo",
     "title": "OpenCode-combo",
     "category": "비용절감",
-    "tags": ["비용절감", "MCP", "DeepSeek", "코딩에이전트"],
+    "tags": [
+      "비용절감",
+      "MCP",
+      "DeepSeek",
+      "코딩에이전트"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@unclejobs.ai",
@@ -303,7 +450,12 @@
     "id": "openfreemap",
     "title": "OpenFreeMap",
     "category": "인프라",
-    "tags": ["지도", "무료", "OpenStreetMap", "오픈소스"],
+    "tags": [
+      "지도",
+      "무료",
+      "OpenStreetMap",
+      "오픈소스"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@conanssam",
@@ -315,7 +467,12 @@
     "id": "ssl-skill-standard",
     "title": "SSL-skill-standard",
     "category": "에이전트",
-    "tags": ["에이전트", "스킬표준", "SSL", "논문"],
+    "tags": [
+      "에이전트",
+      "스킬표준",
+      "SSL",
+      "논문"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@ai_crazyman",
@@ -327,7 +484,12 @@
     "id": "barsaengnim",
     "title": "Barsaengnim",
     "category": "에이전트",
-    "tags": ["메타에이전트", "회고", "자기분석", "ClaudeCode"],
+    "tags": [
+      "메타에이전트",
+      "회고",
+      "자기분석",
+      "ClaudeCode"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@gptaku_ai",
@@ -339,7 +501,12 @@
     "id": "webnovel-3skills",
     "title": "Webnovel-3skills",
     "category": "방법론",
-    "tags": ["웹소설", "스킬프레임워크", "콘텐츠", "한국어"],
+    "tags": [
+      "웹소설",
+      "스킬프레임워크",
+      "콘텐츠",
+      "한국어"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@sparronix",
@@ -351,7 +518,11 @@
     "id": "taste-1",
     "title": "taste-1",
     "category": "개인화",
-    "tags": ["개인화", "패턴학습", "에이전트"],
+    "tags": [
+      "개인화",
+      "패턴학습",
+      "에이전트"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@unclejobs.ai",
@@ -363,7 +534,12 @@
     "id": "ai-readable-company",
     "title": "AI-readable-company",
     "category": "방법론",
-    "tags": ["방법론", "데이터구조화", "AX", "온톨로지전제"],
+    "tags": [
+      "방법론",
+      "데이터구조화",
+      "AX",
+      "온톨로지전제"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@gptaku_ai",
@@ -375,7 +551,13 @@
     "id": "xai-voice-clone",
     "title": "xAI-voice-clone",
     "category": "음성",
-    "tags": ["음성", "TTS", "클론", "딥페이크방지", "xAI"],
+    "tags": [
+      "음성",
+      "TTS",
+      "클론",
+      "딥페이크방지",
+      "xAI"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -387,7 +569,12 @@
     "id": "codex-game-proto",
     "title": "Codex-game-proto",
     "category": "프로토타이핑",
-    "tags": ["Codex", "게임", "프로토타입", "goal명령"],
+    "tags": [
+      "Codex",
+      "게임",
+      "프로토타입",
+      "goal명령"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -399,7 +586,13 @@
     "id": "codex-os-strategy",
     "title": "Codex-OS-strategy",
     "category": "트렌드분석",
-    "tags": ["Codex", "OpenAI", "트렌드", "슈퍼앱", "AI전략"],
+    "tags": [
+      "Codex",
+      "OpenAI",
+      "트렌드",
+      "슈퍼앱",
+      "AI전략"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -411,7 +604,12 @@
     "id": "ollama-claude",
     "title": "Ollama-Claude",
     "category": "비용절감",
-    "tags": ["Ollama", "로컬LLM", "비용절감", "ClaudeDesktop"],
+    "tags": [
+      "Ollama",
+      "로컬LLM",
+      "비용절감",
+      "ClaudeDesktop"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -423,7 +621,12 @@
     "id": "claudecode-ui-limit",
     "title": "ClaudeCode-UI-limit",
     "category": "방법론",
-    "tags": ["ClaudeCode", "UI", "디자인한계", "경고"],
+    "tags": [
+      "ClaudeCode",
+      "UI",
+      "디자인한계",
+      "경고"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@unclejobs.ai",
@@ -435,7 +638,12 @@
     "id": "ontology-critique",
     "title": "Ontology-critique",
     "category": "방법론",
-    "tags": ["온톨로지", "비판", "GraphDB", "현실론"],
+    "tags": [
+      "온톨로지",
+      "비판",
+      "GraphDB",
+      "현실론"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@catlovessubakba",
@@ -447,7 +655,12 @@
     "id": "ventoy-claudecode",
     "title": "Ventoy-ClaudeCode",
     "category": "인프라",
-    "tags": ["USB", "휴대형", "ClaudeCode", "Linux"],
+    "tags": [
+      "USB",
+      "휴대형",
+      "ClaudeCode",
+      "Linux"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@hostingglobal",
@@ -459,8 +672,15 @@
     "id": "acestep-cpp-light",
     "title": "acestep-cpp-light",
     "category": "음악",
-    "tags": ["음악", "로컬", "C++", "Metal"],
-    "related": ["acestep-cpp"],
+    "tags": [
+      "음악",
+      "로컬",
+      "C++",
+      "Metal"
+    ],
+    "related": [
+      "acestep-cpp"
+    ],
     "status": "archived",
     "url": "",
     "summary": "ACE-Step C++ 경량버전. acestep-cpp와 중복 항목으로 통합됨.",
@@ -471,7 +691,11 @@
     "id": "chomex-prompt",
     "title": "Chomex-prompt",
     "category": "도구제작",
-    "tags": ["프롬프트추출", "오픈소스", "공유"],
+    "tags": [
+      "프롬프트추출",
+      "오픈소스",
+      "공유"
+    ],
     "related": [],
     "status": "active",
     "url": "https://threads.net/@choi.openai",
@@ -483,8 +707,14 @@
     "id": "designmd-extractor-chrome",
     "title": "DesignMD-extractor-chrome",
     "category": "디자인",
-    "tags": ["디자인", "Chrome확장", "SKILLmd"],
-    "related": ["design-md-standard"],
+    "tags": [
+      "디자인",
+      "Chrome확장",
+      "SKILLmd"
+    ],
+    "related": [
+      "design-md-standard"
+    ],
     "status": "active",
     "url": "https://threads.net/@lucas_flatwhite",
     "summary": "DESIGN.md 추출 Chrome 확장. SKILL.md 파일도 포함 제공.",
@@ -495,8 +725,16 @@
     "id": "claude-code-best-practice",
     "title": "claude-code-best-practice",
     "category": "에이전트",
-    "tags": ["ClaudeCode", "멀티에이전트", "베스트프랙티스", "오픈소스"],
-    "related": ["anthropic-3patterns", "claude-skills"],
+    "tags": [
+      "ClaudeCode",
+      "멀티에이전트",
+      "베스트프랙티스",
+      "오픈소스"
+    ],
+    "related": [
+      "anthropic-3patterns",
+      "claude-skills"
+    ],
     "status": "active",
     "url": "https://github.com/anthropics/claude-code-best-practice",
     "summary": "Claude Code 멀티에이전트 엔지니어링 베스트 프랙티스 레포. 19.7K stars.",
@@ -507,7 +745,12 @@
     "id": "web3-failure-analysis",
     "title": "Web3-failure-analysis",
     "category": "트렌드분석",
-    "tags": ["Web3", "실패분석", "수익모델", "메타버스"],
+    "tags": [
+      "Web3",
+      "실패분석",
+      "수익모델",
+      "메타버스"
+    ],
     "related": [],
     "status": "active",
     "url": "https://www.threads.com/@storyteller_jhk",
@@ -519,8 +762,16 @@
     "id": "omnivoice",
     "title": "OmniVoice",
     "category": "음성",
-    "tags": ["음성", "클론", "오픈소스", "Xiaomi", "3초클론"],
-    "related": ["xai-voice-clone"],
+    "tags": [
+      "음성",
+      "클론",
+      "오픈소스",
+      "Xiaomi",
+      "3초클론"
+    ],
+    "related": [
+      "xai-voice-clone"
+    ],
     "status": "active",
     "url": "https://www.threads.com/@choi.openai",
     "summary": "Xiaomi OmniVoice. 3초 음성으로 600개 언어 클론. 오픈소스.",
@@ -531,8 +782,16 @@
     "id": "claude-code-repo-collection",
     "title": "Claude-Code-repo-collection",
     "category": "정보수집",
-    "tags": ["ClaudeCode", "레포모음", "claude-mem", "LightRAG", "n8n"],
-    "related": ["claude-skills"],
+    "tags": [
+      "ClaudeCode",
+      "레포모음",
+      "claude-mem",
+      "LightRAG",
+      "n8n"
+    ],
+    "related": [
+      "claude-skills"
+    ],
     "status": "active",
     "url": "https://www.threads.com/@jwon.ig",
     "summary": "Claude Code 관련 유용 레포 큐레이션: claude-mem, UI UX Pro Max, n8n-MCP, LightRAG 등.",
@@ -543,7 +802,12 @@
     "id": "creativity-prompt-technique",
     "title": "Creativity-prompt-technique",
     "category": "방법론",
-    "tags": ["프롬프트", "창의성", "연구기반", "MaxPlanck"],
+    "tags": [
+      "프롬프트",
+      "창의성",
+      "연구기반",
+      "MaxPlanck"
+    ],
     "related": [],
     "status": "active",
     "url": "https://www.threads.com/@kimjuik2026",
@@ -555,8 +819,17 @@
     "id": "claude-mem",
     "title": "claude-mem",
     "category": "지식관리",
-    "tags": ["지식관리", "메모리", "SQLite", "Chroma", "토큰절약"],
-    "related": ["tolaria", "obsidian-ai"],
+    "tags": [
+      "지식관리",
+      "메모리",
+      "SQLite",
+      "Chroma",
+      "토큰절약"
+    ],
+    "related": [
+      "tolaria",
+      "obsidian-ai"
+    ],
     "status": "active",
     "url": "https://github.com/synthience-labs/claude-mem",
     "summary": "SQLite + Chroma 이중 저장. 3단계 점진적 공개로 토큰 10배 절약. 59.3K stars.",
@@ -567,8 +840,15 @@
     "id": "hermes-agent",
     "title": "Hermes Agent",
     "category": "에이전트",
-    "tags": ["에이전트", "오픈소스", "멀티에이전트", "작업추적"],
-    "related": ["claude-code-best-practice"],
+    "tags": [
+      "에이전트",
+      "오픈소스",
+      "멀티에이전트",
+      "작업추적"
+    ],
+    "related": [
+      "claude-code-best-practice"
+    ],
     "status": "active",
     "url": "https://github.com/NousResearch/hermes-agent",
     "summary": "NousResearch의 자기학습 에이전트. /goal 목표 추적, Kanban 멀티에이전트 보드, zombie 감지, 환각 복구. 95.6K stars.",
@@ -579,8 +859,16 @@
     "id": "anthropic-onboarding",
     "title": "Anthropic 신입 온보딩 패턴",
     "category": "방법론",
-    "tags": ["Anthropic공식", "에이전트", "방법론", "ClaudeCode"],
-    "related": ["claude-code-best-practice", "ssl-skill-standard"],
+    "tags": [
+      "Anthropic공식",
+      "에이전트",
+      "방법론",
+      "ClaudeCode"
+    ],
+    "related": [
+      "claude-code-best-practice",
+      "ssl-skill-standard"
+    ],
     "status": "active",
     "url": "https://claude.com/blog/onboarding-claude-code-like-a-new-developer-lessons-from-17-years-of-development",
     "summary": "Claude를 신입처럼 온보딩. Skills 라이브러리, 맥락은 관리 인공물, 단계적 학습 패턴.",
@@ -591,8 +879,16 @@
     "id": "anthropic-managed-agents",
     "title": "Anthropic Managed Agents",
     "category": "에이전트",
-    "tags": ["Anthropic공식", "에이전트", "멀티에이전트", "메모리"],
-    "related": ["anthropic-3patterns", "anthropic-onboarding"],
+    "tags": [
+      "Anthropic공식",
+      "에이전트",
+      "멀티에이전트",
+      "메모리"
+    ],
+    "related": [
+      "anthropic-3patterns",
+      "anthropic-onboarding"
+    ],
     "status": "active",
     "url": "https://claude.com/blog/new-in-claude-managed-agents",
     "summary": "Dreaming(패턴학습), Outcomes(자동채점), Multiagent(위임), Memory(파일시스템 기반). Harvey 6x 완료율.",
@@ -603,8 +899,15 @@
     "id": "anthropic-prompt-caching",
     "title": "Anthropic 프롬프트 캐싱 가이드",
     "category": "방법론",
-    "tags": ["Anthropic공식", "비용절감", "캐싱", "ClaudeCode"],
-    "related": ["anthropic-onboarding"],
+    "tags": [
+      "Anthropic공식",
+      "비용절감",
+      "캐싱",
+      "ClaudeCode"
+    ],
+    "related": [
+      "anthropic-onboarding"
+    ],
     "status": "active",
     "url": "https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything",
     "summary": "캐시 적중률=비용·속도 핵심. 5분 TTL, 정적→동적 정렬, 도구 추가/제거 금지, 컴팩션 지시문.",
@@ -615,8 +918,15 @@
     "id": "anthropic-agentic-pm",
     "title": "에이전틱 시대 제품 개발",
     "category": "방법론",
-    "tags": ["Anthropic공식", "에이전트", "방법론", "기획"],
-    "related": ["anthropic-managed-agents"],
+    "tags": [
+      "Anthropic공식",
+      "에이전트",
+      "방법론",
+      "기획"
+    ],
+    "related": [
+      "anthropic-managed-agents"
+    ],
     "status": "active",
     "url": "https://claude.com/blog/product-development-in-the-agentic-era",
     "summary": "PM=프로토타이퍼. 탐색(대화)→자동화(에이전트) 이중접근. 반복행정 에이전트화, 창의적 작업 집중.",
@@ -627,12 +937,38 @@
     "id": "anthropic-agent-memory",
     "title": "Anthropic Agent Memory",
     "category": "에이전트",
-    "tags": ["Anthropic공식", "메모리", "에이전트"],
-    "related": ["anthropic-managed-agents", "claude-mem"],
+    "tags": [
+      "Anthropic공식",
+      "메모리",
+      "에이전트"
+    ],
+    "related": [
+      "anthropic-managed-agents",
+      "claude-mem"
+    ],
     "status": "active",
     "url": "https://claude.com/blog/claude-managed-agents-memory",
     "summary": "파일시스템 기반 메모리. 조직(읽기전용)+개별(읽기쓰기) 권한분리. Rakuten 오류97%↓, 비용27%↓.",
     "use_when": "에이전트 메모리 아키텍처·권한 분리 설계 시",
     "verified_at": "2026-05-08"
+  },
+  {
+    "id": "hugh-kim-space",
+    "title": "Hugh Kim (hue_0525) — 에이전트 아키텍처",
+    "category": "개발",
+    "tags": [
+      "에이전트",
+      "오케스트레이션",
+      "ClaudeCode",
+      "메모리뱅크",
+      "아키텍처",
+      "컨텍스트열화"
+    ],
+    "related": [],
+    "status": "active",
+    "url": "https://hugh-kim.space/",
+    "summary": "Hugh Kim(@hue_0525, GitHub jung-wan-kim). Claude Code 멀티에이전트 오케스트레이션 시스템(13에이전트·50+스킬·자가진화·메모리뱅크) 상세 문서. 노아 시스템과 직결.",
+    "use_when": "에이전트 오케스트레이션·메모리·세션관리·컨텍스트 시스템 설계 참고할 때",
+    "verified_at": "2026-06-07"
   }
 ]
