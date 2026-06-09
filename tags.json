@@ -78,10 +78,12 @@
   "Codex": [
     "codex-2d-sprite",
     "codex-game-proto",
-    "codex-os-strategy"
+    "codex-os-strategy",
+    "openpets-desktop"
   ],
   "스프라이트": [
-    "codex-2d-sprite"
+    "codex-2d-sprite",
+    "openpets-desktop"
   ],
   "캐릭터": [
     "codex-2d-sprite"
@@ -179,7 +181,8 @@
     "anthropic-managed-agents",
     "anthropic-agentic-pm",
     "anthropic-agent-memory",
-    "hugh-kim-space"
+    "hugh-kim-space",
+    "hue-rules-as-code"
   ],
   "Anthropic공식": [
     "anthropic-3patterns",
@@ -225,7 +228,8 @@
     "claude-code-repo-collection",
     "anthropic-onboarding",
     "anthropic-prompt-caching",
-    "hugh-kim-space"
+    "hugh-kim-space",
+    "hue-rules-as-code"
   ],
   "ClaudeSkills": [
     "claude-skills",
@@ -555,5 +559,26 @@
   ],
   "원칙": [
     "license-two-layer"
+  ],
+  "hook": [
+    "hue-rules-as-code"
+  ],
+  "규칙강제": [
+    "hue-rules-as-code"
+  ],
+  "HughKim": [
+    "hue-rules-as-code"
+  ],
+  "데스크탑펫": [
+    "openpets-desktop"
+  ],
+  "마스코트": [
+    "openpets-desktop"
+  ],
+  "Mac": [
+    "openpets-desktop"
+  ],
+  "말풍선": [
+    "openpets-desktop"
   ]
 }

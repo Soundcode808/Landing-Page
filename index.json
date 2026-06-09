@@ -1104,5 +1104,44 @@
     "summary": "코드 라이선스≠weights 라이선스. 코드 MIT여도 weights가 CC-BY-NC면 상업불가. 데이터셋NC→weights NC 전염. 구조·기법(논문/MIT)은 자유차용, 자체데이터 재학습 결과물은 우리 것.",
     "use_when": "오픈소스 AI 모델을 상업적으로 쓸 수 있는지 판단할 때",
     "verified_at": "2026-06-09"
+  },
+  {
+    "id": "hue-rules-as-code",
+    "title": "규칙은 MD 아닌 코드로(hook/exit code)",
+    "category": "에이전트",
+    "tags": [
+      "에이전트",
+      "ClaudeCode",
+      "hook",
+      "규칙강제",
+      "HughKim"
+    ],
+    "related": [],
+    "status": "active",
+    "url": "https://www.threads.com/@hue_0525/post/DZWna07Egux",
+    "summary": "MD 규칙은 '부탁'일 뿐 강제 못 함. 진짜 강제는 hook·exit code·코드 실행으로만. 핵심 규칙은 코드로 박아 AI 드리프트 차단. 단 유연성 필요한 건 MD로 남김.",
+    "use_when": "에이전트/Codex가 규칙을 안 지키고 흔들릴 때, 절대 안 흔들려야 할 핵심 규칙을 강제할 때",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "openpets-desktop",
+    "title": "openpets (데스크탑 마스코트)",
+    "category": "캐릭터",
+    "tags": [
+      "데스크탑펫",
+      "마스코트",
+      "Codex",
+      "Mac",
+      "스프라이트",
+      "말풍선"
+    ],
+    "related": [
+      "codex-2d-sprite"
+    ],
+    "status": "active",
+    "url": "https://github.com/alterhq/openpets",
+    "summary": "macOS 데스크탑 마스코트. MCP/CLI(openpets notify)로 말풍선 출력, 커스텀 스프라이트(8x9+pet.json) 지원, Codex Pets 호환, MIT. 봇 출력을 채팅 대신 캐릭터 말풍선으로 띄우는 출력 어댑터 용도.",
+    "use_when": "데스크탑 캐릭터로 정보를 말풍선 출력하거나 봇 출력 어댑터(플러그)를 만들 때",
+    "verified_at": "2026-06-09"
   }
 ]
