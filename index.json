@@ -970,5 +970,139 @@
     "summary": "Hugh Kim(@hue_0525, GitHub jung-wan-kim). Claude Code 멀티에이전트 오케스트레이션 시스템(13에이전트·50+스킬·자가진화·메모리뱅크) 상세 문서. 노아 시스템과 직결.",
     "use_when": "에이전트 오케스트레이션·메모리·세션관리·컨텍스트 시스템 설계 참고할 때",
     "verified_at": "2026-06-07"
+  },
+  {
+    "id": "applio-rvc",
+    "title": "Applio (RVC)",
+    "category": "음성",
+    "tags": [
+      "음성",
+      "보이스커버",
+      "RVC",
+      "MIT",
+      "상업가능",
+      "로컬",
+      "파인튜닝",
+      "노래"
+    ],
+    "related": [
+      "soulx-singer",
+      "xai-voice-clone"
+    ],
+    "status": "active",
+    "url": "https://github.com/IAHispano/Applio",
+    "summary": "RVC 기반 보이스커버 GUI. 코드+weights MIT, 베이스모델 VCTK(저작권 깨끗)=상업가능. dry보컬 10~30분 파인튜닝, RTX3080 10GB 여유.",
+    "use_when": "특정 가수 음색으로 커버를 합법·로컬·무료로 만들 때(1순위)",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "soulx-singer",
+    "title": "SoulX-Singer",
+    "category": "음성",
+    "tags": [
+      "음성",
+      "보이스커버",
+      "SVC",
+      "제로샷",
+      "Apache2.0",
+      "상업가능",
+      "로컬",
+      "노래"
+    ],
+    "related": [
+      "applio-rvc"
+    ],
+    "status": "active",
+    "url": "https://github.com/Soul-AILab/SoulX-Singer",
+    "summary": "제로샷 노래목소리 변환/합성(SVC/SVS). 코드+weights 모두 Apache2.0=상업가능. weights 약 5.6GB. (한국어 미학습, VRAM 실측 필요)",
+    "use_when": "학습 없이 상업가능한 보이스커버가 필요할 때(라이선스 무균)",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "diffrhythm",
+    "title": "DiffRhythm / DiffRhythm2",
+    "category": "음악",
+    "tags": [
+      "음악",
+      "노래생성",
+      "로컬",
+      "Apache2.0",
+      "상업가능",
+      "Suno대안"
+    ],
+    "related": [
+      "ace-step-ui",
+      "yue-song"
+    ],
+    "status": "active",
+    "url": "https://github.com/ASLP-lab/DiffRhythm2",
+    "summary": "잠재확산 풀렝스 노래(보컬+반주) 생성. Apache2.0 상업가능. base 8GB chunked로 RTX3080 가능, Windows 포팅 있음. (작곡기지 커버기 아님)",
+    "use_when": "가사+스타일로 곡 전체를 로컬에서 빠르게 생성할 때",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "yue-song",
+    "title": "YuE",
+    "category": "음악",
+    "tags": [
+      "음악",
+      "노래생성",
+      "가사",
+      "한국어",
+      "Apache2.0",
+      "상업가능",
+      "Suno대안"
+    ],
+    "related": [
+      "ace-step-ui",
+      "diffrhythm"
+    ],
+    "status": "active",
+    "url": "https://github.com/multimodal-art-projection/YuE",
+    "summary": "가사→최대 5분 완성곡 오픈 파운데이션(7B). Apache2.0, 한국어 가사 지원. RTX3080엔 양자화로 경계선·느림, 디스크 ~100GB.",
+    "use_when": "한국어 가사로 풀곡 데모를 만들 때(자원 여유 시)",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "yingmusic",
+    "title": "YingMusic-SVC/Singer",
+    "category": "음악",
+    "tags": [
+      "음악",
+      "보이스커버",
+      "SVC",
+      "노래생성",
+      "기법참조",
+      "비상업weights"
+    ],
+    "related": [
+      "soulx-singer",
+      "applio-rvc"
+    ],
+    "status": "reference",
+    "url": "https://github.com/GiantAILab/YingMusic-SVC",
+    "summary": "제로샷 SVC/가창합성. 코드 MIT지만 weights는 CC-BY-NC(상업금지). 가치=기법(Flow-GRPO, F0-Aware 음색변조, Energy-Balanced loss, 화음증강) 차용해 RVC에 이식.",
+    "use_when": "보이스커버 품질 기법을 차용·연구할 때(weights 직접사용 금지)",
+    "verified_at": "2026-06-09"
+  },
+  {
+    "id": "license-two-layer",
+    "title": "오픈소스 두겹 라이선스 원칙",
+    "category": "지식",
+    "tags": [
+      "라이선스",
+      "상업판단",
+      "코드vs가중치",
+      "원칙"
+    ],
+    "related": [
+      "soulx-singer",
+      "yingmusic"
+    ],
+    "status": "active",
+    "url": "",
+    "summary": "코드 라이선스≠weights 라이선스. 코드 MIT여도 weights가 CC-BY-NC면 상업불가. 데이터셋NC→weights NC 전염. 구조·기법(논문/MIT)은 자유차용, 자체데이터 재학습 결과물은 우리 것.",
+    "use_when": "오픈소스 AI 모델을 상업적으로 쓸 수 있는지 판단할 때",
+    "verified_at": "2026-06-09"
   }
 ]

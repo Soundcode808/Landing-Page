@@ -3,12 +3,18 @@
     "ace-step-ui",
     "acestep-cpp",
     "acestep-cpp-light",
-    "xai-voice-clone"
+    "xai-voice-clone",
+    "diffrhythm",
+    "yue-song",
+    "yingmusic"
   ],
   "로컬": [
     "ace-step-ui",
     "acestep-cpp",
-    "acestep-cpp-light"
+    "acestep-cpp-light",
+    "applio-rvc",
+    "soulx-singer",
+    "diffrhythm"
   ],
   "3초클론": [
     "omnivoice"
@@ -17,7 +23,9 @@
     "omnivoice"
   ],
   "Suno대안": [
-    "ace-step-ui"
+    "ace-step-ui",
+    "diffrhythm",
+    "yue-song"
   ],
   "BGM": [
     "ace-step-ui",
@@ -317,7 +325,8 @@
     "webnovel-3skills"
   ],
   "한국어": [
-    "webnovel-3skills"
+    "webnovel-3skills",
+    "yue-song"
   ],
   "개인화": [
     "taste-1"
@@ -342,7 +351,9 @@
   ],
   "음성": [
     "xai-voice-clone",
-    "omnivoice"
+    "omnivoice",
+    "applio-rvc",
+    "soulx-singer"
   ],
   "클론": [
     "xai-voice-clone",
@@ -482,5 +493,67 @@
   ],
   "컨텍스트열화": [
     "hugh-kim-space"
+  ],
+  "보이스커버": [
+    "applio-rvc",
+    "soulx-singer",
+    "yingmusic"
+  ],
+  "RVC": [
+    "applio-rvc"
+  ],
+  "MIT": [
+    "applio-rvc"
+  ],
+  "상업가능": [
+    "applio-rvc",
+    "soulx-singer",
+    "diffrhythm",
+    "yue-song"
+  ],
+  "파인튜닝": [
+    "applio-rvc"
+  ],
+  "노래": [
+    "applio-rvc",
+    "soulx-singer"
+  ],
+  "SVC": [
+    "soulx-singer",
+    "yingmusic"
+  ],
+  "제로샷": [
+    "soulx-singer"
+  ],
+  "Apache2.0": [
+    "soulx-singer",
+    "diffrhythm",
+    "yue-song"
+  ],
+  "노래생성": [
+    "diffrhythm",
+    "yue-song",
+    "yingmusic"
+  ],
+  "가사": [
+    "yue-song"
+  ],
+  "기법참조": [
+    "yingmusic"
+  ],
+  "비상업weights": [
+    "yingmusic"
+  ],
+  "라이선스": [
+    "license-two-layer"
+  ],
+  "상업판단": [
+    "license-two-layer"
+  ],
+  "코드vs가중치": [
+    "license-two-layer"
+  ],
+  "원칙": [
+    "license-two-layer"
   ]
 }
