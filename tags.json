@@ -3,7 +3,6 @@
     "ace-step-ui",
     "acestep-cpp",
     "acestep-cpp-light",
-    "xai-voice-clone",
     "diffrhythm",
     "yue-song",
     "yingmusic"
@@ -14,13 +13,10 @@
     "acestep-cpp-light",
     "applio-rvc",
     "soulx-singer",
-    "diffrhythm"
-  ],
-  "3초클론": [
-    "omnivoice"
-  ],
-  "Xiaomi": [
-    "omnivoice"
+    "diffrhythm",
+    "basic-memory",
+    "sqlite-vec-fts5",
+    "llm-wiki-fivetaku"
   ],
   "Suno대안": [
     "ace-step-ui",
@@ -47,7 +43,8 @@
   "무료": [
     "trellis-2",
     "voltagent-designs",
-    "openfreemap"
+    "openfreemap",
+    "sqlite-vec-fts5"
   ],
   "Microsoft": [
     "trellis-2"
@@ -64,7 +61,8 @@
   "MCP": [
     "blender-connector",
     "chromex",
-    "opencode-combo"
+    "opencode-combo",
+    "basic-memory"
   ],
   "Claude공식": [
     "blender-connector"
@@ -113,16 +111,19 @@
     "webnovel-3skills"
   ],
   "검증됨": [
-    "ontology-webnovel-case",
-    "cybersecurity-skills"
+    "ontology-webnovel-case"
   ],
   "지식관리": [
     "tolaria",
     "obsidian-ai",
-    "claude-mem"
+    "claude-mem",
+    "basic-memory",
+    "llm-wiki-fivetaku"
   ],
   "LLMWiki": [
-    "tolaria"
+    "tolaria",
+    "basic-memory",
+    "llm-wiki-fivetaku"
   ],
   "Git": [
     "tolaria"
@@ -137,7 +138,8 @@
     "obsidian-ai"
   ],
   "PKM": [
-    "obsidian-ai"
+    "obsidian-ai",
+    "basic-memory"
   ],
   "디자인": [
     "design-md-standard",
@@ -165,19 +167,15 @@
   "자동추출": [
     "designmd-extractor"
   ],
-  "SKILLmd": [
-    "designmd-extractor-chrome"
-  ],
   "에이전트": [
     "anthropic-3patterns",
     "evolver",
     "pi-autoresearch",
     "omc",
     "ssl-skill-standard",
-    "barsaengnim",
     "taste-1",
-    "claude-code-best-practice",
     "hermes-agent",
+    "anthropic-onboarding",
     "anthropic-managed-agents",
     "anthropic-agentic-pm",
     "anthropic-agent-memory",
@@ -229,7 +227,8 @@
     "anthropic-onboarding",
     "anthropic-prompt-caching",
     "hugh-kim-space",
-    "hue-rules-as-code"
+    "hue-rules-as-code",
+    "llm-wiki-fivetaku"
   ],
   "ClaudeSkills": [
     "claude-skills",
@@ -243,17 +242,21 @@
   ],
   "오픈소스": [
     "claude-skills",
-    "printing-press",
     "chromex",
     "trend-radar",
     "openfreemap",
     "chomex-prompt",
-    "omnivoice"
+    "claude-code-best-practice",
+    "omnivoice",
+    "hermes-agent"
   ],
   "CLI": [
     "printing-press"
   ],
   "MCP대안": [
+    "printing-press"
+  ],
+  "자동생성": [
     "printing-press"
   ],
   "비개발자": [
@@ -265,8 +268,12 @@
   "보안": [
     "cybersecurity-skills"
   ],
+  "검증": [
+    "cybersecurity-skills"
+  ],
   "기획": [
-    "prd-auto"
+    "prd-auto",
+    "anthropic-agentic-pm"
   ],
   "PRD": [
     "prd-auto"
@@ -283,14 +290,16 @@
     "trend-radar"
   ],
   "프롬프트": [
-    "youmind"
+    "youmind",
+    "creativity-prompt-technique"
   ],
   "큐레이션": [
     "youmind"
   ],
   "비용절감": [
     "opencode-combo",
-    "ollama-claude"
+    "ollama-claude",
+    "anthropic-prompt-caching"
   ],
   "DeepSeek": [
     "opencode-combo"
@@ -340,9 +349,8 @@
   ],
   "방법론": [
     "ai-readable-company",
-    "claudecode-ui-limit",
-    "ontology-critique",
-    "creativity-prompt-technique"
+    "anthropic-onboarding",
+    "anthropic-agentic-pm"
   ],
   "데이터구조화": [
     "ai-readable-company"
@@ -429,6 +437,9 @@
   "공유": [
     "chomex-prompt"
   ],
+  "SKILLmd": [
+    "designmd-extractor-chrome"
+  ],
   "멀티에이전트": [
     "claude-code-best-practice",
     "hermes-agent",
@@ -448,6 +459,12 @@
   ],
   "메타버스": [
     "web3-failure-analysis"
+  ],
+  "Xiaomi": [
+    "omnivoice"
+  ],
+  "3초클론": [
+    "omnivoice"
   ],
   "레포모음": [
     "claude-code-repo-collection"
@@ -472,10 +489,13 @@
   ],
   "메모리": [
     "claude-mem",
+    "anthropic-managed-agents",
     "anthropic-agent-memory"
   ],
   "SQLite": [
-    "claude-mem"
+    "claude-mem",
+    "basic-memory",
+    "sqlite-vec-fts5"
   ],
   "Chroma": [
     "claude-mem"
@@ -507,7 +527,8 @@
     "applio-rvc"
   ],
   "MIT": [
-    "applio-rvc"
+    "applio-rvc",
+    "llm-wiki-fivetaku"
   ],
   "상업가능": [
     "applio-rvc",
@@ -580,5 +601,14 @@
   ],
   "말풍선": [
     "openpets-desktop"
+  ],
+  "RAG": [
+    "sqlite-vec-fts5"
+  ],
+  "검색": [
+    "sqlite-vec-fts5"
+  ],
+  "하이브리드검색": [
+    "sqlite-vec-fts5"
   ]
 }

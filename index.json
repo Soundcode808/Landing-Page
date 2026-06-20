@@ -1143,5 +1143,71 @@
     "summary": "macOS 데스크탑 마스코트. MCP/CLI(openpets notify)로 말풍선 출력, 커스텀 스프라이트(8x9+pet.json) 지원, Codex Pets 호환, MIT. 봇 출력을 채팅 대신 캐릭터 말풍선으로 띄우는 출력 어댑터 용도.",
     "use_when": "데스크탑 캐릭터로 정보를 말풍선 출력하거나 봇 출력 어댑터(플러그)를 만들 때",
     "verified_at": "2026-06-09"
+  },
+  {
+    "id": "basic-memory",
+    "title": "Basic Memory",
+    "category": "지식관리",
+    "tags": [
+      "지식관리",
+      "LLMWiki",
+      "MCP",
+      "PKM",
+      "로컬",
+      "SQLite"
+    ],
+    "related": [
+      "tolaria",
+      "obsidian-ai",
+      "claude-mem"
+    ],
+    "status": "active",
+    "url": "https://github.com/basicmachines-co/basic-memory",
+    "summary": "MD=정본·로컬SQLite색인=파생인 에이전트 위키. MCP 네이티브(write_note/search_notes). 2.6k별·v0.12로 llm-wiki/naite보다 성숙. AGPL v3(로컬·개인 사용은 무방).",
+    "use_when": "위키·검색층을 마크다운 정본으로 올릴 때",
+    "verified_at": "2026-06-20"
+  },
+  {
+    "id": "sqlite-vec-fts5",
+    "title": "sqlite-vec + FTS5 하이브리드",
+    "category": "지식관리",
+    "tags": [
+      "RAG",
+      "SQLite",
+      "로컬",
+      "검색",
+      "하이브리드검색",
+      "무료"
+    ],
+    "related": [
+      "claude-mem",
+      "basic-memory"
+    ],
+    "status": "active",
+    "url": "https://github.com/asg017/sqlite-vec",
+    "summary": "sqlite에 벡터검색(sqlite-vec)+전문검색(FTS5) 확장만 추가하는 경량 하이브리드 RAG. 추가 인프라 0, bge-m3 임베딩 직결. 관계형 코퍼스 직접통합 최저 난이도.",
+    "use_when": "sqlite 코퍼스에 의미검색/RAG 얹을 때",
+    "verified_at": "2026-06-20"
+  },
+  {
+    "id": "llm-wiki-fivetaku",
+    "title": "llm-wiki (지피타쿠)",
+    "category": "지식관리",
+    "tags": [
+      "LLMWiki",
+      "지식관리",
+      "ClaudeCode",
+      "MIT",
+      "로컬"
+    ],
+    "related": [
+      "tolaria",
+      "basic-memory"
+    ],
+    "status": "active",
+    "url": "https://github.com/fivetaku/llm-wiki",
+    "summary": "클로드코드 전용 MD 위키 스타터. 2단 라우팅(별칭→샤드→본문)으로 위키 커져도 쿼리 토큰 일정. 벡터DB 없음·MIT. 갓 공개(미성숙)=패턴 참조용.",
+    "use_when": "클코로 가벼운 MD 위키 패턴 참고할 때",
+    "verified_at": "2026-06-20"
   }
 ]
